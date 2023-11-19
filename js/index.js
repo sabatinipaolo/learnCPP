@@ -1,11 +1,42 @@
 class Model {
     constructor() {
+        this.quizCorrente ={};
+        this.indiceQuizCorrente=-1;
 
-        this.quizCorrente = {
-            testo: '#include <iostream> \nusing namespace std;\n \nint main { \n\tcout << " hello world " << endl \n}',
-            soluzione: "hello world"
-        }
+        fetch("./quiz/elenco.txt")
+            .then((res) => res.text())
+            .then((text) => {
+                // do something with "text"
+                this.elencoNomiQuiz = text.split('\n');
+                this.altroQuiz();
+            })
     }
+
+    altroQuiz() {
+        //TODO:prevedere fine sessione di quiz
+        this.indiceQuizCorrente++ ;
+        if (this.indiceQuizCorrente >= this.elencoNomiQuiz.length) {
+            this.indiceQuizCorrente = 0;
+        }
+
+        fetch("./quiz/" + this.elencoNomiQuiz[this.indiceQuizCorrente] + ".cpp")
+            .then((res) => res.text())
+            .then((text) => {
+                // do something with "text"
+                this.quizCorrente.testo = text;
+                this.onQuizChanged();
+            })
+            .catch((e) => console.error(e));
+        fetch("./quiz/" + this.elencoNomiQuiz[this.indiceQuizCorrente] + ".sol")
+            .then((res) => res.text())
+            .then((text) => {
+                // do something with "text"
+                this.quizCorrente.soluzione = text;
+                this.onQuizChanged();
+            })
+            .catch((e) => console.error(e));
+    }
+
 
     controlla(risposta) {
         let dmp = new diff_match_patch(); //TODO : rendere globale dmp?
@@ -43,6 +74,12 @@ class View {
         })
     }
 
+    bindOnClickAltroQuiz(handler) {
+        this.bottoneAltroQuiz.addEventListener("click", event => {
+            handler();
+        })
+    }
+
     mostraSoluzione(testoSoluzione) {
         this.soluzione.value = testoSoluzione;
     }
@@ -75,10 +112,16 @@ class Controller {
         //"padrona")
         this.view.bindOnClickControlla(this.handleOnControlla);
         this.model.bindOnQuizChanged(this.handleOnQuizChanged);
+        this.view.bindOnClickAltroQuiz(this.handleAltroQuiz);
 
         this.view.cancellaQuiz(); //da spostare in view ?
         this.handleOnQuizChanged(); //nato un nuovo quiz. da spostare in model ...
 
+    }
+    
+    handleAltroQuiz = () => {
+        this.model.altroQuiz();
+        this.view.cancellaQuiz(); 
     }
 
     handleOnQuizChanged = () => {
