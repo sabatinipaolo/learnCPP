@@ -92,6 +92,7 @@ class View {
 
     mostraQuiz(quiz) {
         this.codeBlock.innerHTML = this.escapeHTML(quiz.testo);
+        delete codeBlock.dataset.highlighted;
         hljs.highlightElement(this.codeBlock);
     }
 
