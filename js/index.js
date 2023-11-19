@@ -57,6 +57,12 @@ class View {
         this.codeBlock.innerHTML = this.escapeHTML(quiz.testo);
         hljs.highlightElement(this.codeBlock);
     }
+
+    cancellaQuiz() {
+        this.risposta.value = "";
+        this.soluzione.value = "";
+        this.differenze.innerHTML = "";
+    }
 }
 
 class Controller {
@@ -70,6 +76,7 @@ class Controller {
         this.view.bindOnClickControlla(this.handleOnControlla);
         this.model.bindOnQuizChanged(this.handleOnQuizChanged);
 
+        this.view.cancellaQuiz(); //da spostare in view ?
         this.handleOnQuizChanged(); //nato un nuovo quiz. da spostare in model ...
 
     }
