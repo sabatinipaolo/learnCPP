@@ -7,6 +7,11 @@ class Model {
         }
     }
 
+    controlla(risposta) {
+        let dmp = new diff_match_patch(); //TODO : rendere globale dmp?
+        return dmp.diff_main(risposta, this.quizCorrente.soluzione);
+    }
+
     bindOnQuizChanged(handler) {
         this.onQuizChanged = handler;
     }
@@ -42,6 +47,12 @@ class View {
         this.soluzione.value = testoSoluzione;
     }
 
+    mostraDifferenze(diff) {
+        let dmp = new diff_match_patch(); //TODO : rendere globale dmp?
+        let differenzeRenderizzate = dmp.diff_prettyHtml(diff);
+        this.differenze.innerHTML = differenzeRenderizzate;
+    }
+
     mostraQuiz(quiz) {
         this.codeBlock.innerHTML = this.escapeHTML(quiz.testo);
         hljs.highlightElement(this.codeBlock);
@@ -69,6 +80,8 @@ class Controller {
 
     handleOnControlla = () => {
         this.view.mostraSoluzione(this.model.quizCorrente.soluzione);
+        let diff = this.model.controlla(this.view.risposta.value);
+        this.view.mostraDifferenze(diff);
     }
 
 }
