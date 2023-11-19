@@ -5,6 +5,14 @@ class Model {
 
 
 class View {
+
+    escapeHTML(stringa) {
+        //https://stackoverflow.com/questions/3043775/how-to-escape-html
+
+        var p = document.createElement("p");
+        p.appendChild(document.createTextNode(stringa));
+        return p.innerHTML;
+    }
     constructor() {
         this.codeBlock = document.getElementById("codeBlock");
         this.risposta = document.getElementById("risposta");
@@ -13,7 +21,7 @@ class View {
         this.differenze = document.getElementById("differenze");
         this.bottoneAltroQuiz = document.getElementById("altroQuiz");
  
-        this.codeBlock.innerHTML = '#include <iostream> \nusing namespace std;\n \nint main { \n\tcout << " hello world " << endl \n}';
+        this.codeBlock.innerHTML = this.escapeHTML('#include <iostream> \nusing namespace std;\n \nint main { \n\tcout << " hello world " << endl \n}');
 
         hljs.highlightElement(this.codeBlock);
     }
