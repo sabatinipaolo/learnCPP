@@ -14,7 +14,9 @@ class View {
         this.bottoneAltroQuiz = document.getElementById("altroQuiz");
  
         this.codeBlock.innerHTML = '#include <iostream> \nusing namespace std;\n \nint main { \n\tcout << " hello world " << endl \n}';
-   }
+
+        hljs.highlightElement(this.codeBlock);
+    }
 }
 
 class Controller {
