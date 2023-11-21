@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="./diff_match_patch/diff_match_patch_uncompressed.js"></script>
 
-    
+
     <link rel="stylesheet" href="./style/style.css">
     <script src="./js/index.js"></script>
 
@@ -21,21 +21,29 @@
 <body onload="setup()">
     <main>
         <h1>header</h1>
-
-        <pre><code id="codeBlock" class="language-cpp"><code></pre>
-        output:<br>
-        <textarea id="risposta" ></textarea>
-        <br>
-        <button id="bottoneControlla">controlla</button>
-        <br>
-        soluzione:
-        <br>
-        <textarea id="soluzione" readonly></textarea>
-        <br>
-        differenze:
-        <br>
-        <div id="differenze">hello mondo world</div>
-        <button id="altroQuiz">un altro quiz</button>
+        <div class="app-container">
+            <div class="sx box">
+                <pre><code id="codeBlock" class="language-cpp"></code></pre>
+            </div>
+            <div class="dx box-container">
+                    output:<br>
+                    <textarea id="risposta"></textarea>
+                <div>
+                    <button id="bottoneControlla">controlla</button>
+                </div>
+                    
+                        soluzione:
+                        <br>
+                        <textarea id="soluzione" readonly></textarea>
+                    
+                    differenze:
+                    <br>
+                    <div id="differenze">hello mondo world</div>
+                    <div>
+                        <button id="altroQuiz">un altro quiz</button>
+                    </div>
+                </div>
+            </div>
     </main>
 </body>
 
