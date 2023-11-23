@@ -21,21 +21,34 @@
 <body onload="setup()">
     <main>
         <h1>header</h1>
+        
+        <flex class="h" style="flex: 1; height: 500px;">
+            <flex-item style="flex: 1; background-color: blueviolet;">
+		      
+		        <pre><code id="codeBlock" class="language-cpp">
+                    
+                <code></pre>
+            </flex-item>  
 
-        <pre><code id="codeBlock" class="language-cpp"><code></pre>
-        output:<br>
-        <textarea id="risposta" ></textarea>
-        <br>
-        <button id="bottoneControlla">controlla</button>
-        <br>
-        soluzione:
-        <br>
-        <textarea id="soluzione" readonly></textarea>
-        <br>
-        differenze:
-        <br>
-        <div id="differenze">hello mondo world</div>
-        <button id="altroQuiz">un altro quiz</button>
+            <flex-resizer></flex-resizer>
+            <flex-item style="flex: 1; background-color: rgb(43, 226, 165);">
+		   
+                output:<br>
+    
+                <textarea id="risposta" ></textarea>
+                <br>
+                <button id="bottoneControlla">controlla</button>
+                <br>
+                soluzione:
+                <br>
+                <textarea id="soluzione" readonly></textarea>
+                <br>
+                differenze:
+                <br>
+                <div id="differenze">hello mondo world</div>
+                <button id="altroQuiz">un altro quiz</button>
+            </flex-item>    
+        </flex>
     </main>
 </body>
 
