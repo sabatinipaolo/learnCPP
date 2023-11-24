@@ -2,7 +2,9 @@ function manageResize(md, sizeProp, posProp) {
 	var r = md.target;
 
 	var prev = r.previousElementSibling;
+	//todo: ricercare il primo elemento precedente di tipo flex-item 
 	var next = r.nextElementSibling;
+	//todo: ricercare il primo elemento successivo di tipo flex-item
 	if (!prev || !next) {
 		return;
 	}
