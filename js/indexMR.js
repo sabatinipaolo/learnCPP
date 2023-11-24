@@ -3,8 +3,16 @@ function manageResize(md, sizeProp, posProp) {
 
 	var prev = r.previousElementSibling;
 	//todo: ricercare il primo elemento precedente di tipo flex-item 
+	while (prev.nodeType !== 1 || (prev.tagName !== "FLEX-ITEM" && prev.tagName !== "FLEX" )){
+		prev = prev.previousElementSibling;
+	}
 	var next = r.nextElementSibling;
 	//todo: ricercare il primo elemento successivo di tipo flex-item
+	while (next.nodeType !== 1 || (next.tagName !== "FLEX-ITEM" && next.tagName !== "FLEX" )){
+		next = next.nextElementSibling;
+	}
+	
+
 	if (!prev || !next) {
 		return;
 	}
