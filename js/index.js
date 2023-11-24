@@ -139,5 +139,6 @@ class Controller {
 
 var app
 function setup() {
-    app = new Controller(new Model(), new View())
+    app = new Controller(new Model(), new View());
+    setupResizerEvents();
 }
