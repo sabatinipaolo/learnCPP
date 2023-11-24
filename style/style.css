@@ -9,6 +9,7 @@
 flex {
    display: flex;
    overflow: hidden;
+   /*width: 100%;*/
 }
 
 flex.h {
@@ -21,7 +22,11 @@ flex.v {
 
 flex-item {
 
-   overflow: auto;
+   overflow: both;
+
+   min-width: 0;
+   min-height: 0;
+
 }
 
 flex>flex-resizer {
