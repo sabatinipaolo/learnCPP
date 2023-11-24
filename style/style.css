@@ -30,7 +30,7 @@ flex-item {
 }
 
 flex>flex-resizer {
-   flex: 0 0 10px;
+   flex: 0 0 4px;
    background-color: #aaa;
    background-repeat: no-repeat;
    background-position: center;
