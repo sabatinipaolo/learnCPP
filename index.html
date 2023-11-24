@@ -30,23 +30,31 @@
             </flex-item>  
 
             <flex-resizer></flex-resizer>
-            <flex-item style="flex: 1; ">
-		   
-                output:<br>
-    
-                <textarea id="risposta" ></textarea>
-                <br>
-                <button id="bottoneControlla">controlla</button>
-                <br>
-                soluzione:
-                <br>
-                <textarea id="soluzione" readonly></textarea>
-                <br>
-                differenze:
-                <br>
-                <div id="differenze">hello mondo world</div>
-                <button id="altroQuiz">un altro quiz</button>
-            </flex-item>    
+            <flex class="v" style="flex:1">
+                    
+                    <button id="bottoneControlla">controlla</button>
+                    
+                    <flex-item style="flex: 1;"><div>output:</div>
+                        
+                        <textarea id="risposta" ></textarea>
+                    </flex-item>
+                    
+                    <flex-resizer></flex-resizer>
+                    
+                    <flex-item style="flex: 1;">
+                            soluzione:
+                            <br>
+                            <textarea id="soluzione" readonly></textarea>
+                            <br>
+                            differenze:
+                            <br>
+                            <div id="differenze">hello mondo world</div>
+                            <button id="altroQuiz">un altro quiz</button>
+                        </flex>
+                    </flex>
+            </flex>
+                    
+            
         </flex>
     </main>
 </body>
