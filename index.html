@@ -23,7 +23,7 @@
 <body onload="setup()">
     <main>
         <h1>header</h1>
-        
+        <button id="altroQuiz">un altro quiz</button>
         <flex class="h" style="flex: 1; height: 85vh;">
             <flex-item style="flex: 1;">		      
                 <pre><code id="codeBlock" class="language-cpp"></code></pre>
@@ -45,13 +45,17 @@
                             soluzione:
                             <br>
                             <textarea id="soluzione" readonly></textarea>
-                            <br>
+                    </flex-item>
+
+                    <flex-resizer></flex-resizer>
+                    
+                    <flex-item style="flex: 1;">
                             differenze:
                             <br>
                             <div id="differenze">hello mondo world</div>
-                            <button id="altroQuiz">un altro quiz</button>
-                        </flex>
-                    </flex>
+                            
+                    </flex-item>
+                   
             </flex>
                     
             
