@@ -1,7 +1,7 @@
 class Model {
     constructor() {
-        this.quizCorrente ={};
-        this.indiceQuizCorrente=-1;
+        this.quizCorrente = {};
+        this.indiceQuizCorrente = -1;
 
         fetch("./quiz/elenco.txt")
             .then((res) => res.text())
@@ -85,8 +85,29 @@ class View {
     }
 
     mostraDifferenze(diff) {
-        let dmp = new diff_match_patch(); //TODO : rendere globale dmp?
-        let differenzeRenderizzate = dmp.diff_prettyHtml(diff);
+        let differenzeRenderizzate = "";
+        let s = "";
+        diff.forEach(element => {
+            console.log(element);
+            element[1] = element[1].replaceAll(" ", "&nbsp");
+            element[1] = element[1].replaceAll("\n", "&para<br>");
+
+            switch (element[0]) {
+                case -1:
+                    // rimuovere
+                    s = "<delchar>" + element[1] + "</delchar>";
+                    break;
+                case 0:
+                    // corretta
+                    s = "<okchar>" + element[1] + "</okchar>";
+                    break;
+                case 1:
+                    // aggiungere
+                    s = "<addchar>" + element[1] + "</addchar>";
+                    break;
+            }
+            differenzeRenderizzate += s;
+        });
         this.differenze.innerHTML = differenzeRenderizzate;
     }
 
