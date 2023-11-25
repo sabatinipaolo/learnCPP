@@ -1,3 +1,15 @@
 * {
    font-family: monospace;
   }
+
+addchar {
+   background-color: #d7d7ff;
+}
+
+delchar {
+   background-color: #ffd7d7;
+}
+
+okchar {
+   background-color: #d7ffd7;
+}
