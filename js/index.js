@@ -2,14 +2,32 @@ class Model {
     constructor() {
         this.quizCorrente = {};
         this.indiceQuizCorrente = -1;
+        this.path="./quiz";
+        this.indiceDirectoryCorrente= 0;
+        this.elencoNomiDirectory= []
 
-        fetch("./quiz/elenco.txt")
-            .then((res) => res.text())
-            .then((text) => {
-                // do something with "text"
-                this.elencoNomiQuiz = text.split('\n');
-                this.altroQuiz();
-            })
+
+        fetch(this.path+"/elencoDirectory.txt")
+        .then((res) => res.text())
+        .then((text) => {
+            // do something with "text"
+            this.elencoNomiDirectory = text.split('\n');
+            this.gEND();
+            
+            //TODO : DRY vedi selezionaDirectory( indice)   
+            fetch(this.path+"/"+this.elencoNomiDirectory[this.indiceDirectoryCorrente]+"/elenco.txt")
+                .then((res) => res.text())
+                .then((text) => {
+                    // do something with "text"
+                    this.elencoNomiQuiz = text.split('\n');
+                    this.altroQuiz();
+                })
+        })
+
+    }
+
+    gEND(){
+        this.generatoElencoNomiDirectory();
     }
 
     altroQuiz() {
@@ -19,7 +37,7 @@ class Model {
             this.indiceQuizCorrente = 0;
         }
 
-        fetch("./quiz/" + this.elencoNomiQuiz[this.indiceQuizCorrente] + ".cpp")
+        fetch(this.path+"/"+this.elencoNomiDirectory[this.indiceDirectoryCorrente]+"/"+ this.elencoNomiQuiz[this.indiceQuizCorrente] + ".cpp")
             .then((res) => res.text())
             .then((text) => {
                 // do something with "text"
@@ -27,7 +45,7 @@ class Model {
                 this.onQuizChanged();
             })
             .catch((e) => console.error(e));
-        fetch("./quiz/" + this.elencoNomiQuiz[this.indiceQuizCorrente] + ".sol")
+        fetch("./quiz/" + this.elencoNomiDirectory[this.indiceDirectoryCorrente]+"/"+ this.elencoNomiQuiz[this.indiceQuizCorrente]+ ".sol")
             .then((res) => res.text())
             .then((text) => {
                 // do something with "text"
@@ -43,8 +61,25 @@ class Model {
         return dmp.diff_main(risposta, this.quizCorrente.soluzione);
     }
 
+    selezionaDirectory( indice ){
+        this.indiceDirectoryCorrente = indice;
+        
+        //TODO : DRY vedi constructor 
+        fetch(this.path+"/"+this.elencoNomiDirectory[this.indiceDirectoryCorrente]+"/elenco.txt")
+        .then((res) => res.text())
+        .then((text) => {
+            this.indiceQuizCorrente = -1; 
+            this.elencoNomiQuiz = text.split('\n');
+            this.altroQuiz();
+        })
+
+    }
     bindOnQuizChanged(handler) {
         this.onQuizChanged = handler;
+    }
+
+    bindGeneratoElencoNomiDirectory(handler){
+        this.generatoElencoNomiDirectory = handler;
     }
 }
 
@@ -65,6 +100,15 @@ class View {
         this.soluzione = document.getElementById("soluzione");
         this.differenze = document.getElementById("differenze");
         this.bottoneAltroQuiz = document.getElementById("altroQuiz");
+        this.selettoreCartella=document.getElementById("selettoreCartella");
+    }
+
+    costruisceSelettoreCartella ( elenco ){
+
+        elenco.forEach((element, index) => {
+            var opt=new Option(element, index);
+            this.selettoreCartella[index]=opt;
+        });
     }
 
     //bind per l'inversione di controllo
@@ -80,6 +124,11 @@ class View {
         })
     }
 
+    bindOnSelectAltraDirectory(handler){
+        this.selettoreCartella.addEventListener("change", event => {
+            handler();
+        })
+    }
     mostraSoluzione(testoSoluzione) {
         this.soluzione.value = testoSoluzione;
     }
@@ -139,8 +188,22 @@ class Controller {
         this.view.cancellaQuiz(); //da spostare in view ?
         this.handleOnQuizChanged(); //nato un nuovo quiz. da spostare in model ...
 
+
+        //costruisce il selettoredi cartelle TODO: da spostare in view?
+        this.model.bindGeneratoElencoNomiDirectory( this.handleGeneratoElencoNomiDirectory );
+
+        this.view.bindOnSelectAltraDirectory (this.handleOnSelectAltraDirectory ); 
+
     }
     
+    handleOnSelectAltraDirectory = () => {
+        //alert ("selezionata directory " + this.view.selettoreCartella.value );
+        this.model.selezionaDirectory( this.view.selettoreCartella.value ) ; 
+    }
+    handleGeneratoElencoNomiDirectory = () => {
+        this.view.costruisceSelettoreCartella(this.model.elencoNomiDirectory);
+    }
+
     handleAltroQuiz = () => {
         this.model.altroQuiz();
         this.view.cancellaQuiz(); 
