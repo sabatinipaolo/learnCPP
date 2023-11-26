@@ -29,7 +29,6 @@ class Model {
             });
     }
 
-
     altroQuiz() {
         //TODO:prevedere fine sessione di quiz
         this.indiceQuizCorrente++;
@@ -37,7 +36,7 @@ class Model {
             this.indiceQuizCorrente = 0;
         }
 
-        //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato 
+        //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato
         // 2 volte, prevedere possibili tempi di download lunghi ...)
         fetch(
             this.path +
@@ -93,7 +92,7 @@ class Model {
             });
     }
 
-    bindSignalQuizChanged(handler) {
+    //bind per l'inversione di controllo    bindSignalQuizChanged(handler) {
         this.signalQuizChanged = handler;
     }
 
@@ -127,24 +126,6 @@ class View {
         });
     }
 
-    //bind per l'inversione di controllo
-    bindSignalOnClickControlla(handler) {
-        this.bottoneControlla.addEventListener("click", (event) => {
-            handler();
-        });
-    }
-
-    bindSignalOnClickAltroQuiz(handler) {
-        this.bottoneAltroQuiz.addEventListener("click", (event) => {
-            handler();
-        });
-    }
-
-    bindSignalOnSelectAltraDirectory(handler) {
-        this.selettoreCartella.addEventListener("change", (event) => {
-            handler();
-        });
-    }
     mostraSoluzione(testoSoluzione) {
         this.soluzione.value = testoSoluzione;
     }
@@ -187,6 +168,25 @@ class View {
         this.soluzione.value = "";
         this.differenze.innerHTML = "";
     }
+
+    //bind per l'inversione di controllo
+    bindSignalOnClickControlla(handler) {
+        this.bottoneControlla.addEventListener("click", (event) => {
+            handler();
+        });
+    }
+
+    bindSignalOnClickAltroQuiz(handler) {
+        this.bottoneAltroQuiz.addEventListener("click", (event) => {
+            handler();
+        });
+    }
+
+    bindSignalOnSelectAltraDirectory(handler) {
+        this.selettoreCartella.addEventListener("change", (event) => {
+            handler();
+        });
+    }
 }
 
 class Controller {
@@ -209,7 +209,9 @@ class Controller {
             this.handleSignalGeneratoElencoNomiDirectory
         );
 
-        this.view.bindSignalOnSelectAltraDirectory(this.handleSignalOnSelectAltraDirectory);
+        this.view.bindSignalOnSelectAltraDirectory(
+            this.handleSignalOnSelectAltraDirectory
+        );
     }
 
     handleSignalOnSelectAltraDirectory = () => {
