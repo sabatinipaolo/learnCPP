@@ -1,16 +1,37 @@
 * {
     font-family: monospace;
+    padding: 3px;
+}
+
+main {
+}
+
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+header > div {
+    font-size: larger;
+    font-weight: bolder;
+}
+
+pre {
+    margin: 0px;
 }
 
 /*
-  per flex-box
+  per flex-box resizeable
 */
 
 flex {
     display: flex;
     overflow: hidden;
     /*width: 100%;*/
-    flex: 1
+    flex: 1;
 }
 
 flex.h {
@@ -29,10 +50,11 @@ flex-item {
 }
 
 flex > flex-resizer {
-    flex: 0 0 4px;
+    flex: 0 0 3px;
     background-color: #aaa;
     background-repeat: no-repeat;
     background-position: center;
+    padding: 0px;
 }
 
 flex.h > flex-resizer {
@@ -57,6 +79,10 @@ flex.v > flex-resizer {
 
 #differenze {
     padding: 3px;
+}
+
+.diffchar {
+    padding: 0px;
 }
 
 addchar {

@@ -19,14 +19,25 @@
 
     <body onload="setup()">
         <main>
-            <h2>Test your skill</h2>
-            <select id="selettoreCartella"></select>
-            <button id="quizIndietro">&lt&lt quiz</button>
-            <button id="quizAvanti">quiz >></button>
+            <header>
+                <div>Test your skill</div>
+                <select id="selettoreCartella"></select>
+            </header>
+
             <flex class="h" style="height: 85vh">
                 <flex-item style="flex: 1">
+                    <nav style="display: flex; justify-content: space-between">
+                        <button id="quizIndietro">&lt&lt quiz</button>
+                        <div
+                            id="nomeFile"
+                            style="text-align: center; vertical-align: middle"
+                        ></div>
+                        <button id="quizAvanti">quiz >></button>
+                    </nav>
+
                     <pre><code id="codeBlock" class="language-cpp"></code></pre>
                 </flex-item>
+
                 <flex-resizer></flex-resizer>
                 <flex class="v">
                     <button id="bottoneControlla">controlla</button>

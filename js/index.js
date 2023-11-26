@@ -42,16 +42,21 @@ class Model {
 
     caricaInQuizCorrenteQuelloDiIndice(indice) {
         this.quizCorrente.indice = indice;
-        let nomeQuiz =
+
+        let nomeQuiz = this.elencoNomiQuiz[this.quizCorrente.indice];
+
+        this.quizCorrente.nome = nomeQuiz;
+
+        let percorsoENomeQuiz =
             this.path +
             "/" +
             this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
             "/" +
-            this.elencoNomiQuiz[this.quizCorrente.indice];
+            nomeQuiz;
 
         //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato
         // 2 volte, prevedere possibili tempi di download lunghi ...)
-        fetch(nomeQuiz + ".cpp")
+        fetch(percorsoENomeQuiz + ".cpp")
             .then((res) => res.text())
             .then((text) => {
                 this.quizCorrente.testo = text;
@@ -59,7 +64,7 @@ class Model {
             })
             .catch((e) => console.error(e));
 
-        fetch(nomeQuiz + ".sol")
+        fetch(percorsoENomeQuiz + ".sol")
             .then((res) => res.text())
             .then((text) => {
                 this.quizCorrente.soluzione = text;
@@ -113,6 +118,7 @@ class View {
         this.bottoneQuizAvanti = document.getElementById("quizAvanti");
         this.bottoneQuizIndietro = document.getElementById("quizIndietro");
         this.selettoreCartella = document.getElementById("selettoreCartella");
+        this.nomeFile = document.getElementById("nomeFile");
     }
 
     escapeHTML(stringa) {
@@ -144,15 +150,21 @@ class View {
             switch (element[0]) {
                 case -1:
                     // rimuovere
-                    s = "<delchar>" + element[1] + "</delchar>";
+                    s =
+                        "<delchar class='diffchar'>" +
+                        element[1] +
+                        "</delchar>";
                     break;
                 case 0:
                     // corretta
-                    s = "<okchar>" + element[1] + "</okchar>";
+                    s = "<okchar class='diffchar'>" + element[1] + "</okchar>";
                     break;
                 case 1:
                     // aggiungere
-                    s = "<addchar>" + element[1] + "</addchar>";
+                    s =
+                        "<addchar class='diffchar'>" +
+                        element[1] +
+                        "</addchar>";
                     break;
             }
             differenzeRenderizzate += s;
@@ -162,6 +174,7 @@ class View {
 
     mostraQuiz(quiz) {
         this.cancellaQuiz();
+        this.nomeFile.innerHTML = quiz.nome;
         this.codeBlock.innerHTML = this.escapeHTML(quiz.testo);
         delete codeBlock.dataset.highlighted;
         hljs.highlightElement(this.codeBlock);
