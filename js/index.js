@@ -6,7 +6,8 @@ class Model {
         this.indiceDirectoryCorrente = 0;
         this.elencoNomiDirectory = [];
 
-        fetch(this.path + "/elencoDirectory.txt")
+        let nomeElencoDir = this.path + "/elencoDirectory.txt";
+        fetch(nomeElencoDir)
             .then((res) => res.text())
             .then((text) => {
                 // do something with "text"
@@ -38,14 +39,14 @@ class Model {
 
         //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato
         // 2 volte, prevedere possibili tempi di download lunghi ...)
-        fetch(
+        let nomeQuiz =
             this.path +
-                "/" +
-                this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
-                "/" +
-                this.elencoNomiQuiz[this.indiceQuizCorrente] +
-                ".cpp"
-        )
+            "/" +
+            this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
+            "/" +
+            this.elencoNomiQuiz[this.indiceQuizCorrente];
+
+        fetch(nomeQuiz + ".cpp")
             .then((res) => res.text())
             .then((text) => {
                 // do something with "text"
@@ -53,13 +54,8 @@ class Model {
                 this.signalQuizChanged();
             })
             .catch((e) => console.error(e));
-        fetch(
-            "./quiz/" +
-                this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
-                "/" +
-                this.elencoNomiQuiz[this.indiceQuizCorrente] +
-                ".sol"
-        )
+
+        fetch(nomeQuiz + ".sol")
             .then((res) => res.text())
             .then((text) => {
                 // do something with "text"
@@ -70,7 +66,7 @@ class Model {
     }
 
     controlla(risposta) {
-        let dmp = new diff_match_patch(); //TODO : rendere globale dmp?
+        var dmp = new diff_match_patch(); //TODO : rendere globale dmp?
         return dmp.diff_main(risposta, this.quizCorrente.soluzione);
     }
 
