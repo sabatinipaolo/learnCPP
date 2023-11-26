@@ -1,12 +1,12 @@
 class Model {
     constructor() {
-        this.quizCorrente = { };
+        this.quizCorrente = {};
         this.path = "./quiz";
         this.indiceDirectoryCorrente = 0;
         this.elencoNomiDirectory = [];
 
-        let nomeElencoDir = this.path + "/elencoDirectory.txt";
-        fetch(nomeElencoDir)
+        let nomeFileElencoDir = this.path + "/elencoDirectory.txt";
+        fetch(nomeFileElencoDir)
             .then((res) => res.text())
             .then((text) => {
                 // do something with "text"
@@ -14,12 +14,13 @@ class Model {
                 this.signalGeneratoElencoNomiDirectory();
 
                 //TODO : DRY vedi selezionaDirectory( indice)
-                fetch(
+                let nomeFileElencoQuiz =
                     this.path +
-                        "/" +
-                        this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
-                        "/elenco.txt"
-                )
+                    "/" +
+                    this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
+                    "/elenco.txt";
+
+                fetch(nomeFileElencoQuiz)
                     .then((res) => res.text())
                     .then((text) => {
                         // do something with "text"
@@ -36,12 +37,11 @@ class Model {
 
         i = (i + piuOMenoUno) % n;
 
-        //this.indiceQuizCorrente = i;
-        this.caricaInQuizCorrenteQuelloDiIndice( i );
+        this.caricaInQuizCorrenteQuelloDiIndice(i);
     }
 
-    caricaInQuizCorrenteQuelloDiIndice( indice ) {
-        this.quizCorrente.indice = indice; 
+    caricaInQuizCorrenteQuelloDiIndice(indice) {
+        this.quizCorrente.indice = indice;
         let nomeQuiz =
             this.path +
             "/" +
@@ -54,7 +54,6 @@ class Model {
         fetch(nomeQuiz + ".cpp")
             .then((res) => res.text())
             .then((text) => {
-                // do something with "text"
                 this.quizCorrente.testo = text;
                 this.signalQuizChanged();
             })
@@ -63,7 +62,6 @@ class Model {
         fetch(nomeQuiz + ".sol")
             .then((res) => res.text())
             .then((text) => {
-                // do something with "text"
                 this.quizCorrente.soluzione = text;
                 this.signalQuizChanged();
             })
@@ -79,18 +77,17 @@ class Model {
         this.indiceDirectoryCorrente = indice;
 
         //TODO : DRY vedi constructor
-        fetch(
+        let nomeFileElencoQuiz =
             this.path +
-                "/" +
-                this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
-                "/elenco.txt"
-        )
+            "/" +
+            this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
+            "/elenco.txt";
+
+        fetch(nomeFileElencoQuiz)
             .then((res) => res.text())
             .then((text) => {
-
                 this.elencoNomiQuiz = text.split("\n");
-//                this.indiceQuizCorrente = 0;
-                this.caricaInQuizCorrenteQuelloDiIndice( 0 );
+                this.caricaInQuizCorrenteQuelloDiIndice(0);
             });
     }
 
