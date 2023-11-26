@@ -11,7 +11,7 @@ class Model {
             .then((text) => {
                 // do something with "text"
                 this.elencoNomiDirectory = text.split("\n");
-                this.gEND();
+                this.signalGeneratoElencoNomiDirectory();
 
                 //TODO : DRY vedi selezionaDirectory( indice)
                 fetch(
@@ -29,9 +29,6 @@ class Model {
             });
     }
 
-    gEND() {
-        this.generatoElencoNomiDirectory();
-    }
 
     altroQuiz() {
         //TODO:prevedere fine sessione di quiz
@@ -40,6 +37,8 @@ class Model {
             this.indiceQuizCorrente = 0;
         }
 
+        //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato 
+        // 2 volte, prevedere possibili tempi di download lunghi ...)
         fetch(
             this.path +
                 "/" +
@@ -52,7 +51,7 @@ class Model {
             .then((text) => {
                 // do something with "text"
                 this.quizCorrente.testo = text;
-                this.onQuizChanged();
+                this.signalQuizChanged();
             })
             .catch((e) => console.error(e));
         fetch(
@@ -66,7 +65,7 @@ class Model {
             .then((text) => {
                 // do something with "text"
                 this.quizCorrente.soluzione = text;
-                this.onQuizChanged();
+                this.signalQuizChanged();
             })
             .catch((e) => console.error(e));
     }
@@ -93,12 +92,13 @@ class Model {
                 this.altroQuiz();
             });
     }
-    bindOnQuizChanged(handler) {
-        this.onQuizChanged = handler;
+
+    bindSignalQuizChanged(handler) {
+        this.signalQuizChanged = handler;
     }
 
-    bindGeneratoElencoNomiDirectory(handler) {
-        this.generatoElencoNomiDirectory = handler;
+    bindSignalGeneratoElencoNomiDirectory(handler) {
+        this.signalGeneratoElencoNomiDirectory = handler;
     }
 }
 
@@ -128,19 +128,19 @@ class View {
     }
 
     //bind per l'inversione di controllo
-    bindOnClickControlla(handler) {
+    bindSignalOnClickControlla(handler) {
         this.bottoneControlla.addEventListener("click", (event) => {
             handler();
         });
     }
 
-    bindOnClickAltroQuiz(handler) {
+    bindSignalOnClickAltroQuiz(handler) {
         this.bottoneAltroQuiz.addEventListener("click", (event) => {
             handler();
         });
     }
 
-    bindOnSelectAltraDirectory(handler) {
+    bindSignalOnSelectAltraDirectory(handler) {
         this.selettoreCartella.addEventListener("change", (event) => {
             handler();
         });
@@ -197,39 +197,39 @@ class Controller {
         //inverte il controllo ( la classe view
         //puo' cosi' richiamare un methodo della classe
         //"padrona")
-        this.view.bindOnClickControlla(this.handleOnControlla);
-        this.model.bindOnQuizChanged(this.handleOnQuizChanged);
-        this.view.bindOnClickAltroQuiz(this.handleAltroQuiz);
+        this.view.bindSignalOnClickControlla(this.handleSignalOnControlla);
+        this.model.bindSignalQuizChanged(this.handleSignalQuizChanged);
+        this.view.bindSignalOnClickAltroQuiz(this.handleSignalOnClickAltroQuiz);
 
         this.view.cancellaQuiz(); //da spostare in view ?
-        this.handleOnQuizChanged(); //nato un nuovo quiz. da spostare in model ...
+        this.handleSignalQuizChanged(); //nato un nuovo quiz. da spostare in model ...
 
         //costruisce il selettoredi cartelle TODO: da spostare in view?
-        this.model.bindGeneratoElencoNomiDirectory(
-            this.handleGeneratoElencoNomiDirectory
+        this.model.bindSignalGeneratoElencoNomiDirectory(
+            this.handleSignalGeneratoElencoNomiDirectory
         );
 
-        this.view.bindOnSelectAltraDirectory(this.handleOnSelectAltraDirectory);
+        this.view.bindSignalOnSelectAltraDirectory(this.handleSignalOnSelectAltraDirectory);
     }
 
-    handleOnSelectAltraDirectory = () => {
+    handleSignalOnSelectAltraDirectory = () => {
         //alert ("selezionata directory " + this.view.selettoreCartella.value );
         this.model.selezionaDirectory(this.view.selettoreCartella.value);
     };
-    handleGeneratoElencoNomiDirectory = () => {
+    handleSignalGeneratoElencoNomiDirectory = () => {
         this.view.costruisceSelettoreCartella(this.model.elencoNomiDirectory);
     };
 
-    handleAltroQuiz = () => {
+    handleSignalOnClickAltroQuiz = () => {
         this.model.altroQuiz();
         this.view.cancellaQuiz();
     };
 
-    handleOnQuizChanged = () => {
+    handleSignalQuizChanged = () => {
         this.view.mostraQuiz(this.model.quizCorrente);
     };
 
-    handleOnControlla = () => {
+    handleSignalOnControlla = () => {
         this.view.mostraSoluzione(this.model.quizCorrente.soluzione);
         let diff = this.model.controlla(this.view.risposta.value);
         this.view.mostraDifferenze(diff);
