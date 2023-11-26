@@ -92,7 +92,8 @@ class Model {
             });
     }
 
-    //bind per l'inversione di controllo    bindSignalQuizChanged(handler) {
+    //bind per l'inversione di controllo
+    bindSignalQuizChanged(handler) {
         this.signalQuizChanged = handler;
     }
 
