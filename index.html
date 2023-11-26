@@ -1,67 +1,50 @@
 <!DOCTYPE html>
 <html lang="it">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>LearnC++</title>
+        <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="./diff_match_patch/diff_match_patch_uncompressed.js"></script>
+        <link rel="stylesheet" href="./style/style.css" />
+        <script src="./js/index.js"></script>
+        <script src="./js/indexMR.js"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>LearnC++</title>
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="./diff_match_patch/diff_match_patch_uncompressed.js"></script>
-
-
-    <link rel="stylesheet" href="./style/style.css">
-    <script src="./js/index.js"></script>
-    <script src="./js/indexMR.js"></script>
-
-
-</head>
-
-<body onload="setup()">
-    <main>
-        <h1>header</h1>
-        <select id="selettoreCartella"></select>
-        <button id="altroQuiz">un altro quiz</button>
-        <flex class="h" style="flex: 1; height: 85vh;">
-            <flex-item style="flex: 1;">
-                <pre><code id="codeBlock" class="language-cpp"></code></pre>
-            </flex-item>
-
-            <flex-resizer></flex-resizer>
-            <flex class="v" style="flex:1">
-
-                <button id="bottoneControlla">controlla</button>
-
-                <div>output:</div>
-                <flex-item style="flex: 1;">
-
-                    <textarea id="risposta" spellcheck="false"></textarea>
+    <body onload="setup()">
+        <main>
+            <h1>header</h1>
+            <select id="selettoreCartella"></select>
+            <button id="altroQuiz">un altro quiz</button>
+            <flex class="h" style="flex: 1; height: 85vh">
+                <flex-item style="flex: 1">
+                    <pre><code id="codeBlock" class="language-cpp"></code></pre>
                 </flex-item>
-
                 <flex-resizer></flex-resizer>
-                <div>Soluzione:</div>
-
-                <flex-item style="flex: 1;">
-                    <textarea id="soluzione" readonly></textarea>
-                </flex-item>
-
-                <flex-resizer></flex-resizer>
-
-                <div>differenze:</div>
-
-                <flex-item style="flex: 1;">
-                    <div id="differenze">hello mondo world</div>
-
-                </flex-item>
-
+                <flex class="v" style="flex: 1">
+                    <button id="bottoneControlla">controlla</button>
+                    <div>output:</div>
+                    <flex-item style="flex: 1">
+                        <textarea id="risposta" spellcheck="false"></textarea>
+                    </flex-item>
+                    <flex-resizer></flex-resizer>
+                    <div>Soluzione:</div>
+                    <flex-item style="flex: 1">
+                        <textarea id="soluzione" readonly></textarea>
+                    </flex-item>
+                    <flex-resizer></flex-resizer>
+                    <div>differenze:</div>
+                    <flex-item style="flex: 1">
+                        <div id="differenze">hello mondo world</div>
+                    </flex-item>
+                </flex>
             </flex>
-
-
-        </flex>
-    </main>
-</body>
-
+        </main>
+    </body>
 </html>
