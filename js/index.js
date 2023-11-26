@@ -35,7 +35,7 @@ class Model {
         let i = this.quizCorrente.indice;
         let n = this.elencoNomiQuiz.length;
 
-        i = (i + piuOMenoUno) % n;
+        i = (((i + piuOMenoUno) % n) + n) % n; // i in [ 0 .. n-1 ], mai negativo
 
         this.caricaInQuizCorrenteQuelloDiIndice(i);
     }
@@ -105,11 +105,13 @@ class View {
     constructor() {
         this.codeBlock = document.getElementById("codeBlock");
         this.risposta = document.getElementById("risposta");
-        this.risposta.placeholder="Inserisci qui quello che pensi che il programma produca in output poi clicca su controlla"; 
+        this.risposta.placeholder =
+            "Inserisci qui quello che pensi che il programma produca in output poi clicca su controlla";
         this.bottoneControlla = document.getElementById("bottoneControlla");
         this.soluzione = document.getElementById("soluzione");
         this.differenze = document.getElementById("differenze");
-        this.bottoneAltroQuiz = document.getElementById("altroQuiz");
+        this.bottoneQuizAvanti = document.getElementById("quizAvanti");
+        this.bottoneQuizIndietro = document.getElementById("quizIndietro");
         this.selettoreCartella = document.getElementById("selettoreCartella");
     }
 
@@ -179,12 +181,16 @@ class View {
         });
     }
 
-    bindSignalOnClickAltroQuiz(handler) {
-        this.bottoneAltroQuiz.addEventListener("click", (event) => {
+    bindSignalOnClickQuizAvanti(handler) {
+        this.bottoneQuizAvanti.addEventListener("click", (event) => {
             handler();
         });
     }
-
+    bindSignalOnClickQuizIndietro(handler) {
+        this.bottoneQuizIndietro.addEventListener("click", (event) => {
+            handler();
+        });
+    }
     bindSignalOnSelectAltraDirectory(handler) {
         this.selettoreCartella.addEventListener("change", (event) => {
             handler();
@@ -206,8 +212,12 @@ class Controller {
             this.view.mostraDifferenze(diff);
         });
 
-        this.view.bindSignalOnClickAltroQuiz(() => {
+        this.view.bindSignalOnClickQuizAvanti(() => {
             this.model.altroQuiz(+1);
+        });
+
+        this.view.bindSignalOnClickQuizIndietro(() => {
+            this.model.altroQuiz(-1);
         });
 
         this.model.bindSignalQuizChanged(() => {
