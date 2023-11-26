@@ -138,7 +138,6 @@ class View {
         let differenzeRenderizzate = "";
         let s = "";
         diff.forEach((element) => {
-            console.log(element);
             element[1] = element[1].replaceAll(" ", "&nbsp");
             element[1] = element[1].replaceAll("\n", "&para<br>");
 
