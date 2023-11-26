@@ -1,7 +1,6 @@
 class Model {
     constructor() {
-        this.quizCorrente = {};
-        this.indiceQuizCorrente = -1;
+        this.quizCorrente = { };
         this.path = "./quiz";
         this.indiceDirectoryCorrente = 0;
         this.elencoNomiDirectory = [];
@@ -25,27 +24,33 @@ class Model {
                     .then((text) => {
                         // do something with "text"
                         this.elencoNomiQuiz = text.split("\n");
-                        this.altroQuiz();
+                        //this.indiceDirectoryCorrente = 0;
+                        this.caricaInQuizCorrenteQuelloDiIndice(0);
                     });
             });
     }
 
-    altroQuiz() {
-        //TODO:prevedere fine sessione di quiz
-        this.indiceQuizCorrente++;
-        if (this.indiceQuizCorrente >= this.elencoNomiQuiz.length) {
-            this.indiceQuizCorrente = 0;
-        }
+    altroQuiz(piuOMenoUno) {
+        let i = this.quizCorrente.indice;
+        let n = this.elencoNomiQuiz.length;
 
-        //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato
-        // 2 volte, prevedere possibili tempi di download lunghi ...)
+        i = (i + piuOMenoUno) % n;
+
+        //this.indiceQuizCorrente = i;
+        this.caricaInQuizCorrenteQuelloDiIndice( i );
+    }
+
+    caricaInQuizCorrenteQuelloDiIndice( indice ) {
+        this.quizCorrente.indice = indice; 
         let nomeQuiz =
             this.path +
             "/" +
             this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
             "/" +
-            this.elencoNomiQuiz[this.indiceQuizCorrente];
+            this.elencoNomiQuiz[this.quizCorrente.indice];
 
+        //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato
+        // 2 volte, prevedere possibili tempi di download lunghi ...)
         fetch(nomeQuiz + ".cpp")
             .then((res) => res.text())
             .then((text) => {
@@ -82,9 +87,10 @@ class Model {
         )
             .then((res) => res.text())
             .then((text) => {
-                this.indiceQuizCorrente = -1;
+
                 this.elencoNomiQuiz = text.split("\n");
-                this.altroQuiz();
+//                this.indiceQuizCorrente = 0;
+                this.caricaInQuizCorrenteQuelloDiIndice( 0 );
             });
     }
 
@@ -203,8 +209,7 @@ class Controller {
         });
 
         this.view.bindSignalOnClickAltroQuiz(() => {
-            this.model.altroQuiz();
-            this.view.cancellaQuiz();
+            this.model.altroQuiz(+1);
         });
 
         this.model.bindSignalQuizChanged(() => {
