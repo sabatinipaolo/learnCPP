@@ -103,13 +103,6 @@ class Model {
 }
 
 class View {
-    escapeHTML(stringa) {
-        //https://stackoverflow.com/questions/3043775/how-to-escape-html
-
-        var p = document.createElement("p");
-        p.appendChild(document.createTextNode(stringa));
-        return p.innerHTML;
-    }
     constructor() {
         this.codeBlock = document.getElementById("codeBlock");
         this.risposta = document.getElementById("risposta");
@@ -118,6 +111,14 @@ class View {
         this.differenze = document.getElementById("differenze");
         this.bottoneAltroQuiz = document.getElementById("altroQuiz");
         this.selettoreCartella = document.getElementById("selettoreCartella");
+    }
+
+    escapeHTML(stringa) {
+        //https://stackoverflow.com/questions/3043775/how-to-escape-html
+
+        var p = document.createElement("p");
+        p.appendChild(document.createTextNode(stringa));
+        return p.innerHTML;
     }
 
     costruisceSelettoreCartella(elenco) {
@@ -159,6 +160,7 @@ class View {
     }
 
     mostraQuiz(quiz) {
+        this.cancellaQuiz();
         this.codeBlock.innerHTML = this.escapeHTML(quiz.testo);
         delete codeBlock.dataset.highlighted;
         hljs.highlightElement(this.codeBlock);
@@ -195,48 +197,34 @@ class Controller {
         this.model = model;
         this.view = view;
 
-        //inverte il controllo ( la classe view
-        //puo' cosi' richiamare un methodo della classe
-        //"padrona")
-        this.view.bindSignalOnClickControlla(this.handleSignalOnControlla);
-        this.model.bindSignalQuizChanged(this.handleSignalQuizChanged);
-        this.view.bindSignalOnClickAltroQuiz(this.handleSignalOnClickAltroQuiz);
+        //inverte il controllo ( la classe view puo' cosi'
+        // richiamare un methodo della classe "padrona")
 
-        this.view.cancellaQuiz(); //da spostare in view ?
-        this.handleSignalQuizChanged(); //nato un nuovo quiz. da spostare in model ...
+        this.view.bindSignalOnClickControlla(() => {
+            this.view.mostraSoluzione(this.model.quizCorrente.soluzione);
+            let diff = this.model.controlla(this.view.risposta.value);
+            this.view.mostraDifferenze(diff);
+        });
 
-        //costruisce il selettoredi cartelle TODO: da spostare in view?
-        this.model.bindSignalGeneratoElencoNomiDirectory(
-            this.handleSignalGeneratoElencoNomiDirectory
-        );
+        this.view.bindSignalOnClickAltroQuiz(() => {
+            this.model.altroQuiz();
+            this.view.cancellaQuiz();
+        });
 
-        this.view.bindSignalOnSelectAltraDirectory(
-            this.handleSignalOnSelectAltraDirectory
-        );
+        this.model.bindSignalQuizChanged(() => {
+            this.view.mostraQuiz(this.model.quizCorrente);
+        });
+
+        this.model.bindSignalGeneratoElencoNomiDirectory(() => {
+            this.view.costruisceSelettoreCartella(
+                this.model.elencoNomiDirectory
+            );
+        });
+
+        this.view.bindSignalOnSelectAltraDirectory(() => {
+            this.model.selezionaDirectory(this.view.selettoreCartella.value);
+        });
     }
-
-    handleSignalOnSelectAltraDirectory = () => {
-        //alert ("selezionata directory " + this.view.selettoreCartella.value );
-        this.model.selezionaDirectory(this.view.selettoreCartella.value);
-    };
-    handleSignalGeneratoElencoNomiDirectory = () => {
-        this.view.costruisceSelettoreCartella(this.model.elencoNomiDirectory);
-    };
-
-    handleSignalOnClickAltroQuiz = () => {
-        this.model.altroQuiz();
-        this.view.cancellaQuiz();
-    };
-
-    handleSignalQuizChanged = () => {
-        this.view.mostraQuiz(this.model.quizCorrente);
-    };
-
-    handleSignalOnControlla = () => {
-        this.view.mostraSoluzione(this.model.quizCorrente.soluzione);
-        let diff = this.model.controlla(this.view.risposta.value);
-        this.view.mostraDifferenze(diff);
-    };
 }
 
 var app;
