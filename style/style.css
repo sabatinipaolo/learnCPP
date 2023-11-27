@@ -1,9 +1,10 @@
 * {
-    font-family: monospace;
-    padding: 3px;
+    font-family: Andale Mono, AndaleMono, "Courier New", monospace;
 }
 
-main {
+.terminal {
+    padding: 7px;
+    border: 0px;
 }
 
 header {
@@ -75,10 +76,6 @@ flex.v > flex-resizer {
     height: 100%;
     /*flex:1;*/
     resize: none;
-}
-
-#differenze {
-    padding: 3px;
 }
 
 .diffchar {
