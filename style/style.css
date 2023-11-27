@@ -1,9 +1,12 @@
 * {
-    font-family: monospace;
-    padding: 3px;
+    font-family: Andale Mono,AndaleMono,'Courier New',monospace; 
+
 }
 
-main {
+.terminal {
+
+    padding : 7px;
+    border: 0px;
 }
 
 header {
@@ -77,9 +80,6 @@ flex.v > flex-resizer {
     resize: none;
 }
 
-#differenze {
-    padding: 3px;
-}
 
 .diffchar {
     padding: 0px;
