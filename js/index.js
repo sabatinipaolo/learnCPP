@@ -1,7 +1,8 @@
 class Model {
     constructor() {
         this.quizCorrente = {};
-        this.path = "./quiz";
+        this.linguaggio = "c"
+        this.path = "./quiz/"+this.linguaggio;
         this.indiceDirectoryCorrente = 0;
         this.elencoNomiDirectory = [];
 
@@ -56,7 +57,7 @@ class Model {
 
         //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato
         // 2 volte, prevedere possibili tempi di download lunghi ...)
-        fetch(percorsoENomeQuiz + ".cpp")
+        fetch(percorsoENomeQuiz + "."+this.linguaggio)
             .then((res) => res.text())
             .then((text) => {
                 this.quizCorrente.testo = text;
