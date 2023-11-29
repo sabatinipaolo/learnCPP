@@ -1,11 +1,16 @@
 class Model {
     constructor() {
         this.quizCorrente = {};
-        this.linguaggio = "c"
-        this.path = "./quiz/"+this.linguaggio;
+        this.linguaggio = "c";
         this.indiceDirectoryCorrente = 0;
         this.elencoNomiDirectory = [];
+        this.caricaLinguaggio(this.linguaggio);
+    }
 
+    caricaLinguaggio(linguaggio) {
+        this.linguaggio = linguaggio;
+        this.indiceDirectoryCorrente = 0;
+        this.path = "./quiz/" + this.linguaggio;
         let nomeFileElencoDir = this.path + "/elencoDirectory.txt";
         fetch(nomeFileElencoDir)
             .then((res) => res.text())
@@ -57,7 +62,7 @@ class Model {
 
         //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato
         // 2 volte, prevedere possibili tempi di download lunghi ...)
-        fetch(percorsoENomeQuiz + "."+this.linguaggio)
+        fetch(percorsoENomeQuiz + "." + this.linguaggio)
             .then((res) => res.text())
             .then((text) => {
                 this.quizCorrente.testo = text;
@@ -119,6 +124,12 @@ class View {
         this.bottoneQuizAvanti = document.getElementById("quizAvanti");
         this.bottoneQuizIndietro = document.getElementById("quizIndietro");
         this.selettoreCartella = document.getElementById("selettoreCartella");
+        this.selettoreLinguaggio = document.getElementById("selettoreLinguaggio");
+        //TODO : creare da model ...
+        {
+            this.selettoreLinguaggio[0] = new Option("c", "c");
+            this.selettoreLinguaggio[1] = new Option("cpp", "cpp");
+        }
         this.nomeFile = document.getElementById("nomeFile");
     }
 
@@ -151,10 +162,7 @@ class View {
             switch (element[0]) {
                 case -1:
                     // rimuovere
-                    s =
-                        "<delchar class='diffchar'>" +
-                        element[1] +
-                        "</delchar>";
+                    s = "<delchar class='diffchar'>" + element[1] + "</delchar>";
                     break;
                 case 0:
                     // corretta
@@ -162,10 +170,7 @@ class View {
                     break;
                 case 1:
                     // aggiungere
-                    s =
-                        "<addchar class='diffchar'>" +
-                        element[1] +
-                        "</addchar>";
+                    s = "<addchar class='diffchar'>" + element[1] + "</addchar>";
                     break;
             }
             differenzeRenderizzate += s;
@@ -209,6 +214,11 @@ class View {
             handler();
         });
     }
+    bindSignalOnSelectAltroLinguaggio(handler) {
+        this.selettoreLinguaggio.addEventListener("change", (event) => {
+            handler();
+        });
+    }
 }
 
 class Controller {
@@ -238,13 +248,15 @@ class Controller {
         });
 
         this.model.bindSignalGeneratoElencoNomiDirectory(() => {
-            this.view.costruisceSelettoreCartella(
-                this.model.elencoNomiDirectory
-            );
+            this.view.costruisceSelettoreCartella(this.model.elencoNomiDirectory);
         });
 
         this.view.bindSignalOnSelectAltraDirectory(() => {
             this.model.selezionaDirectory(this.view.selettoreCartella.value);
+        });
+
+        this.view.bindSignalOnSelectAltroLinguaggio(() => {
+            this.model.caricaLinguaggio(this.view.selettoreLinguaggio.value);
         });
     }
 }
