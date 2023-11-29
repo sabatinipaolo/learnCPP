@@ -117,7 +117,7 @@ class View {
         this.codeBlock = document.getElementById("codeBlock");
         this.risposta = document.getElementById("risposta");
         this.risposta.placeholder =
-            "Inserisci qui quello che pensi che il programma produca in output poi clicca su controlla";
+            "Inserisci qui quello che pensi il programma produca in output poi clicca su controlla";
         this.bottoneControlla = document.getElementById("bottoneControlla");
         this.soluzione = document.getElementById("soluzione");
         this.differenze = document.getElementById("differenze");

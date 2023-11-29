@@ -21,15 +21,17 @@
         <main>
             <header style="padding: 5px; display: flex; justify-content: space-between">
                 <div style="flex-grow: 1">
-                    Test your skill
-                    <select id="selettoreLinguaggio"></select>                    </select>
+                    Learn to read :
+                    <select id="selettoreLinguaggio"></select>
                 </div>
-                <select id="selettoreCartella" style="flex-grow: 1.5"></select>
+                <div>
+                    argomento :<select id="selettoreCartella" style="flex-grow: 1.5"></select>
+                </div>
             </header>
 
-            <flex class="h" style="height: 85vh">
+            <flex class="h" style="height: 90vh; border: 1px solid">
                 <flex-item style="flex: 1">
-                    <nav style="display: flex; justify-content: space-between">
+                    <nav>
                         <button id="quizIndietro">&lt&lt quiz</button>
                         <div id="nomeFile" style="text-align: center; vertical-align: middle"></div>
                         <button id="quizAvanti">quiz >></button>
@@ -57,6 +59,7 @@
                     </flex-item>
                 </flex>
             </flex>
+            <footer>sviluppato in modo caotico e disorganizzato da Paolo Sabatini - <a href="https://github.com/sabatinipaolo/learnCPP"> fork me on github</a></footer>
         </main>
     </body>
 </html>
