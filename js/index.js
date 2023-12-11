@@ -142,6 +142,7 @@ class View {
     }
 
     costruisceSelettoreCartella(elenco) {
+        this.selettoreCartella.innerHTML="";
         elenco.forEach((element, index) => {
             var opt = new Option(element, index);
             this.selettoreCartella[index] = opt;
@@ -257,6 +258,7 @@ class Controller {
 
         this.view.bindSignalOnSelectAltroLinguaggio(() => {
             this.model.caricaLinguaggio(this.view.selettoreLinguaggio.value);
+
         });
     }
 }
