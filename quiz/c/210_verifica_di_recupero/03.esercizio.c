@@ -1,11 +1,10 @@
 #include <stdio.h>
 
-void stampa(int n, char carattere){
-    
+void stampa(int n, char carattere)
+{
     for (int i= 1 ; i<= n ; i++)
         printf("%c", carattere);
 }
-
 
 void scacchi ( int n )
 {
@@ -13,7 +12,6 @@ void scacchi ( int n )
         stampa(n,'*'); stampa(n,' ');
         printf("\n");
     }
-
 
     for (int i=1 ; i<= n ; i++){
         stampa(n,' '); stampa(n,'*');
@@ -24,5 +22,4 @@ void scacchi ( int n )
 int main()
 {
     scacchi(5);
-
 }
