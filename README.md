@@ -15,7 +15,8 @@ usa :
 
 TODO: studiare le Action di github per automatizzare la generazione delle soluzioni una volta committati dei sorgenti.
 
-
 TODO: aprire ad altri linguaggi
+
+TODO: sviluppare meglio il resizing delle box (ad esempio su mobile non funziona )
 
 per altro vedere issue.
