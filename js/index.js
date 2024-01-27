@@ -20,26 +20,24 @@ class Model {
 
     inizializzaDaDati() {
         this.quizCorrente = { testo: "", soluzione: "", indice: 0 };
-        this.linguaggi = this.dati.linguaggi;
+        this.signalGeneratoLinguaggi(this.dati.linguaggi);
         this.indiceLinguaggioCorrente = 0; //il default
         this.caricaLinguaggioDiIndice(this.indiceLinguaggioCorrente);
-        this.signalGeneratoLinguaggi(this.dati.linguaggi);
     }
 
     caricaLinguaggioDiIndice(indice) {
         this.indiceLinguaggioCorrente = indice;
 
         this.argomenti = [];
-        for (const argo of this.linguaggi[this.indiceLinguaggioCorrente].argomenti) {
+        for (const argo of this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti) {
             this.argomenti.push(argo.directory);
         }
         this.indiceArgomentoCorrente = 0;
 
         this.signalGeneratoArgomenti();
 
-        console.log(this.linguaggi[this.indiceLinguaggioCorrente].argomenti[0]);
         this.elencoNomiQuiz =
-            this.linguaggi[this.indiceLinguaggioCorrente].argomenti[
+            this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
                 this.indiceArgomentoCorrente
             ].esercizi;
         this.caricaInQuizCorrenteQuelloDiIndice(0);
@@ -64,10 +62,11 @@ class Model {
         let percorsoENomeQuiz =
             this.dati.directory +
             "/" +
-            this.linguaggi[this.indiceLinguaggioCorrente].directory +
+            this.dati.linguaggi[this.indiceLinguaggioCorrente].directory +
             "/" +
-            this.linguaggi[this.indiceLinguaggioCorrente].argomenti[this.indiceArgomentoCorrente]
-                .directory +
+            this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
+                this.indiceArgomentoCorrente
+            ].directory +
             "/" +
             nomeQuiz;
 
@@ -100,7 +99,7 @@ class Model {
     selezionaDirectory(indice) {
         this.indiceArgomentoCorrente = indice;
         this.elencoNomiQuiz =
-            this.linguaggi[this.indiceLinguaggioCorrente].argomenti[
+            this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
                 this.indiceArgomentoCorrente
             ].esercizi;
         this.caricaInQuizCorrenteQuelloDiIndice(0);
