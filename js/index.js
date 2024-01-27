@@ -26,7 +26,6 @@ class Model {
     }
 
     caricaLinguaggioDiIndice(indice) {
-
         this.indiceLinguaggioCorrente = indice;
 
         this.argomenti = [];
@@ -37,7 +36,6 @@ class Model {
 
         this.signalGeneratoArgomenti();
 
-        
         console.log(this.linguaggi[this.indiceLinguaggioCorrente].argomenti[0]);
         this.elencoNomiQuiz =
             this.linguaggi[this.indiceLinguaggioCorrente].argomenti[
@@ -71,13 +69,12 @@ class Model {
                 .directory +
             "/" +
             nomeQuiz;
-        
-        
+
         let estensioneSorgente = this.dati.linguaggi[this.indiceLinguaggioCorrente].estensione;
 
         //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato
         // 2 volte, prevedere possibili tempi di download lunghi ...)
-        fetch(percorsoENomeQuiz + "." + estensioneSorgente )
+        fetch(percorsoENomeQuiz + "." + estensioneSorgente)
             .then((res) => res.text())
             .then((text) => {
                 this.quizCorrente.testo = text;
