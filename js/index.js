@@ -1,10 +1,81 @@
 class Model {
     constructor() {
-        this.quizCorrente = {};
+        this.dati={};
+        this.linguaggi=[];
+        this.indiceLinguaggioCorrente=-1; //TODO : è corretto?
+
+        // this.linguaggioObject={
+        //     "nome": "",
+        //     "directory": "",
+        //     "estensione": "",
+        //     "argomenti": []
+        // }
+
+        this.quizCorrente = { "testo" :"",
+                              "soluzione":"",
+                              "indice" : -1
+                            };
         this.linguaggio = "c";
         this.indiceDirectoryCorrente = 0;
-        this.elencoNomiDirectory = [];
-        this.caricaLinguaggio(this.linguaggio);
+        this.elencoNomiDirectoryArgomenti = [];
+
+        this.caricaDatiDaJson()
+        
+    }
+
+
+
+    caricaDatiDaJson(){
+        fetch("modello.json")
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then((json) => {
+            this.dati = json;
+            this.inizializzaDaDati();
+            this.signalGeneratiNuoviDatiDaFileJSON();
+        });
+    }
+
+    inizializzaDaDati(){
+
+        this.linguaggi=this.dati.linguaggi;
+        this.indiceLinguaggioCorrente=0; //il default
+
+        this.linguaggioObject= this.linguaggi[this.indiceLinguaggioCorrente]
+        
+        this.linguaggio = this.linguaggioObject.directory ; //TODO : ora è directory rinominare linguaggio
+        
+
+        // for ( const argo of  this.linguaggi[this.indiceLinguaggioCorrente].argomenti ){
+        //     this.elencoNomiDirectoryArgomenti.push( argo.directory );
+        // };
+
+        this.caricaLinguaggioDiIndice( this.indiceLinguaggioCorrente );
+
+     }
+
+
+
+    caricaLinguaggioDiIndice (indice) {
+        this.linguaggio = this.linguaggi[indice].directory; //TODO : ora è directory rinominare linguaggio
+        this.indiceDirectoryCorrente = 0;
+        this.indiceLinguaggioCorrente = indice;
+        
+        //this.elencoNomiDirectoryArgomenti[this.indiceDirectoryCorrente];
+        this.elencoNomiDirectoryArgomenti=[];
+        for ( const argo of  this.linguaggi[this.indiceLinguaggioCorrente].argomenti ){
+            this.elencoNomiDirectoryArgomenti.push( argo.directory );
+        };
+        this.signalGeneratoElencoNomiDirectoryArgomenti();
+        console.log(this.linguaggi[this.indiceLinguaggioCorrente].argomenti[0])     
+        this.elencoNomiQuiz = this.linguaggi[this.indiceLinguaggioCorrente].argomenti[ this.indiceDirectoryCorrente].esercizi;
+        this.caricaInQuizCorrenteQuelloDiIndice(0);    
+
+
     }
 
     caricaLinguaggio(linguaggio) {
@@ -16,14 +87,14 @@ class Model {
             .then((res) => res.text())
             .then((text) => {
                 // do something with "text"
-                this.elencoNomiDirectory = text.split("\n");
-                this.signalGeneratoElencoNomiDirectory();
+                this.elencoNomiDirectoryArgomenti = text.split("\n");
+                this.signalGeneratoElencoNomiDirectoryArgomenti();
 
                 //TODO : DRY vedi selezionaDirectory( indice)
                 let nomeFileElencoQuiz =
                     this.path +
                     "/" +
-                    this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
+                    this.elencoNomiDirectoryArgomenti[this.indiceDirectoryCorrente] +
                     "/elenco.txt";
 
                 fetch(nomeFileElencoQuiz)
@@ -49,16 +120,21 @@ class Model {
     caricaInQuizCorrenteQuelloDiIndice(indice) {
         this.quizCorrente.indice = indice;
 
-        let nomeQuiz = this.elencoNomiQuiz[this.quizCorrente.indice];
+        let nomeQuiz = this.elencoNomiQuiz[indice];
 
         this.quizCorrente.nome = nomeQuiz;
 
         let percorsoENomeQuiz =
-            this.path +
-            "/" +
-            this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
-            "/" +
-            nomeQuiz;
+             this.dati.directory +
+             "/" +
+             this.linguaggi[this.indiceLinguaggioCorrente].directory +
+             "/" +
+             this.linguaggi[this.indiceLinguaggioCorrente].argomenti[this.indiceDirectoryCorrente]
+                 .directory +
+             "/" +
+             nomeQuiz;
+                               
+
 
         //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato
         // 2 volte, prevedere possibili tempi di download lunghi ...)
@@ -86,20 +162,9 @@ class Model {
 
     selezionaDirectory(indice) {
         this.indiceDirectoryCorrente = indice;
+        this.elencoNomiQuiz = this.linguaggi[this.indiceLinguaggioCorrente].argomenti[ this.indiceDirectoryCorrente].esercizi;
+        this.caricaInQuizCorrenteQuelloDiIndice(0); 
 
-        //TODO : DRY vedi constructor
-        let nomeFileElencoQuiz =
-            this.path +
-            "/" +
-            this.elencoNomiDirectory[this.indiceDirectoryCorrente] +
-            "/elenco.txt";
-
-        fetch(nomeFileElencoQuiz)
-            .then((res) => res.text())
-            .then((text) => {
-                this.elencoNomiQuiz = text.split("\n");
-                this.caricaInQuizCorrenteQuelloDiIndice(0);
-            });
     }
 
     //bind per l'inversione di controllo
@@ -107,8 +172,12 @@ class Model {
         this.signalQuizChanged = handler;
     }
 
-    bindSignalGeneratoElencoNomiDirectory(handler) {
-        this.signalGeneratoElencoNomiDirectory = handler;
+    bindSignalGeneratoElencoNomiDirectoryArgomenti(handler) {
+        this.signalGeneratoElencoNomiDirectoryArgomenti = handler;
+    }
+
+    bindSignalGeneratiNuoviDatiDaFileJSON(handler){
+        this.signalGeneratiNuoviDatiDaFileJSON=handler;
     }
 }
 
@@ -127,8 +196,8 @@ class View {
         this.selettoreLinguaggio = document.getElementById("selettoreLinguaggio");
         //TODO : creare da model ...
         {
-            this.selettoreLinguaggio[0] = new Option("c", "c");
-            this.selettoreLinguaggio[1] = new Option("cpp", "cpp");
+            this.selettoreLinguaggio[0] = new Option("C", 0);
+            this.selettoreLinguaggio[1] = new Option("C++", 1);
         }
         this.nomeFile = document.getElementById("nomeFile");
     }
@@ -248,8 +317,8 @@ class Controller {
             this.view.mostraQuiz(this.model.quizCorrente);
         });
 
-        this.model.bindSignalGeneratoElencoNomiDirectory(() => {
-            this.view.costruisceSelettoreCartella(this.model.elencoNomiDirectory);
+        this.model.bindSignalGeneratoElencoNomiDirectoryArgomenti(() => {
+            this.view.costruisceSelettoreCartella(this.model.elencoNomiDirectoryArgomenti);
         });
 
         this.view.bindSignalOnSelectAltraDirectory(() => {
@@ -257,9 +326,14 @@ class Controller {
         });
 
         this.view.bindSignalOnSelectAltroLinguaggio(() => {
-            this.model.caricaLinguaggio(this.view.selettoreLinguaggio.value);
+            this.model.caricaLinguaggioDiIndice( parseInt(this.view.selettoreLinguaggio.value));
 
         });
+
+        this.model.bindSignalGeneratiNuoviDatiDaFileJSON( () => {
+            this.view.mostraQuiz(this.model.quizCorrente);
+            this.view.costruisceSelettoreCartella(this.model.elencoNomiDirectoryArgomenti);
+        })
     }
 }
 

@@ -1,0 +1,228 @@
+{
+    "directory": "quiz",
+    "linguaggi": [
+        {
+            "nome": "C",
+            "directory": "c",
+            "estensione": "c",
+            "argomenti": [
+                {
+                    "directory": "010_Hello_World",
+                    "esercizi": [
+                        "010.Hello_World",
+                        "020.Hello_World",
+                        "030.Hello_World",
+                        "040.Hello_World",
+                        "050.Hello_World",
+                        "060.Hello_World",
+                        "070.Hello_World",
+                        "080.Hello_World",
+                        "090.Hello_World",
+                        "100.Hello_World",
+                        "110.Hello_World",
+                        "120.Hello_World",
+                        "130.Hello_World",
+                        "140.Hello_World",
+                        "150.Hello_World",
+                        "160.Hello_World",
+                        "170.Hello_World"
+                    ]
+                },
+                {
+                    "directory": "020_Hello_Int",
+                    "esercizi": [
+                        "010.Hello_Int",
+                        "020.Hello_Int",
+                        "021.Hello_Int",
+                        "030.Hello_Int",
+                        "040.Hello_Int",
+                        "050.Hello_Int",
+                        "060.Hello_Int",
+                        "070.Hello_Int",
+                        "080.Hello_Int",
+                        "090.Hello_Int",
+                        "100.Hello_Int",
+                        "110.Hello_Int",
+                        "120.Hello_Int"
+                    ]
+                },
+                {
+                    "directory": "030_Ascii_e_Char",
+                    "esercizi": [
+                        "010.ascii",
+                        "020.ascii",
+                        "030.ascii",
+                        "040.ascii",
+                        "050.ascii",
+                        "060.ascii",
+                        "070.ascii",
+                        "080.ascii",
+                        "090.ascii",
+                        "100.ascii",
+                        "110.ascii",
+                        "120.ascii",
+                        "130.ascii",
+                        "135.ascii_for",
+                        "140.ascii_for",
+                        "150.ascii_for",
+                        "160.ascii_for",
+                        "170.ascii_for",
+                        "180.ascii_for",
+                        "200.ascii_for",
+                        "210.ascii_for",
+                        "220.ascii_for"
+                    ]
+                },
+                {
+                    "directory": "050_loop_for",
+                    "esercizi": [
+                        "010.for_loop",
+                        "020.for_loop",
+                        "030.for_loop",
+                        "040.for_loop",
+                        "050.for_loop",
+                        "055.for_loop",
+                        "056.for_loop",
+                        "057.for_loop",
+                        "060.for_loop",
+                        "070.for_loop",
+                        "080.for_loop",
+                        "085.for_loop",
+                        "090.for_loop",
+                        "100.for_loop",
+                        "110.for_loop",
+                        "120.for_loop",
+                        "130.for_loop",
+                        "140.for_loop",
+                        "150.for_loop",
+                        "160.for_loop",
+                        "180.for_loop",
+                        "190.for_loop",
+                        "195.for_loop",
+                        "200.for_loop"
+                    ]
+                },
+                
+                {
+                    "directory": "070_array",
+                    "esercizi": [
+                        "010.array_int",
+                        "020.array_int",
+                        "030.array_int",
+                        "040.array_int",
+                        "050.array_int",
+                        "060.array_int",
+                        "070.array_int",
+                        "080.array_int",
+                        "090.array_int",
+                        "100.array_int",
+                        "110.array_int",
+                        "120.array_int"
+                    ]
+                },
+                {
+                    "directory": "090_function",
+                    "esercizi": [
+                        "010_hello_func",
+                        "020_hello_func",
+                        "030_hello_func",
+                        "040_hello_func",
+                        "050_hello_func",
+                        "060_hello_func",
+                        "070_hello_par",
+                        "080_hello_par",
+                        "090_hello_par",
+                        "100_hello_par",
+                        "110_hello_par",
+                        "120_hello_par",
+                        "121_hello_par",
+                        "122_hello_par",
+                        "123_hello_par",
+                        "130_hello_ret",
+                        "140_hello_ret",
+                        "150_hello_ret"
+                    ]
+                },
+                {
+                    "directory": "210_verifica_di_recupero",
+                    "esercizi": [
+                        "01.esercizio",
+                        "02.esercizio",
+                        "03.esercizio"
+                    ]
+                }
+            ]
+        },
+        {
+            "nome": "C++",
+            "directory": "cpp",
+            "estensione": "cpp",
+            "argomenti": [
+                {
+                    "directory": "010_Hello_World",
+                    "esercizi": [
+                        "010.Hello_World",
+                        "020.Hello_World",
+                        "030.Hello_World",
+                        "040.Hello_World",
+                        "050.Hello_World",
+                        "060.Hello_World",
+                        "070.Hello_World",
+                        "080.Hello_World",
+                        "090.Hello_World",
+                        "100.Hello_World",
+                        "110.Hello_World",
+                        "120.Hello_World",
+                        "130.Hello_World",
+                        "140.Hello_World",
+                        "150.Hello_World",
+                        "160.Hello_World",
+                        "170.Hello_World"
+                    ]
+                },
+                {
+                    "directory": "020_Hello_Int",
+                    "esercizi": [
+                        "010.Hello_Int",
+                        "020.Hello_Int",
+                        "030.Hello_Int",
+                        "040.Hello_Int",
+                        "050.Hello_Int",
+                        "060.Hello_Int",
+                        "070.Hello_Int",
+                        "080.Hello_Int",
+                        "090.Hello_Int",
+                        "100.Hello_Int",
+                        "110.Hello_Int",
+                        "120.Hello_Int"
+                    ]
+                },
+                {
+                    "directory": "050_loop_for",
+                    "esercizi": [
+                        "010.for_loop",
+                        "020.for_loop",
+                        "030.for_loop",
+                        "040.for_loop",
+                        "050.for_loop",
+                        "060.for_loop",
+                        "070.for_loop",
+                        "080.for_loop",
+                        "090.for_loop",
+                        "100.for_loop",
+                        "110.for_loop",
+                        "120.for_loop",
+                        "130.for_loop",
+                        "140.for_loop",
+                        "150.for_loop",
+                        "160.for_loop",
+                        "170.for_loop",
+                        "180.for_loop",
+                        "190.for_loop",
+                        "200.for_loop"
+                    ]
+                }
+            ]
+        }
+    ]
+}
