@@ -23,6 +23,7 @@ class Model {
         this.linguaggi = this.dati.linguaggi;
         this.indiceLinguaggioCorrente = 0; //il default
         this.caricaLinguaggioDiIndice(this.indiceLinguaggioCorrente);
+        this.signalGeneratoLinguaggi(this.dati.linguaggi);
     }
 
     caricaLinguaggioDiIndice(indice) {
@@ -117,6 +118,10 @@ class Model {
     bindSignalGeneratiNuoviDatiDaFileJSON(handler) {
         this.signalGeneratiNuoviDatiDaFileJSON = handler;
     }
+
+    bindSignalGeneratoLinguaggi(handler) {
+        this.signalGeneratoLinguaggi=handler;
+    }
 }
 
 class View {
@@ -132,11 +137,7 @@ class View {
         this.bottoneQuizIndietro = document.getElementById("quizIndietro");
         this.selettoreCartella = document.getElementById("selettoreCartella");
         this.selettoreLinguaggio = document.getElementById("selettoreLinguaggio");
-        //TODO : creare da model ...
-        {
-            this.selettoreLinguaggio[0] = new Option("C", 0);
-            this.selettoreLinguaggio[1] = new Option("C++", 1);
-        }
+
         this.nomeFile = document.getElementById("nomeFile");
     }
 
@@ -148,6 +149,16 @@ class View {
         return p.innerHTML;
     }
 
+    costruisceSelettoreLinguaggio(linguaggi){
+
+        for ( let i = 0; i < linguaggi.length ; i++){
+            this.selettoreLinguaggio[i] = new Option(linguaggi[i].nome, i);
+        }
+
+        
+        //this.selettoreLinguaggio[ linguaggi.length ] = new Option("XXXXXXXXXX", linguaggi.length);
+
+    }
     costruisceSelettoreCartella(elenco) {
         this.selettoreCartella.innerHTML = "";
         elenco.forEach((element, index) => {
@@ -271,6 +282,11 @@ class Controller {
             this.view.mostraQuiz(this.model.quizCorrente);
             this.view.costruisceSelettoreCartella(this.model.argomenti);
         });
+
+        this.model.bindSignalGeneratoLinguaggi( ( linguaggi ) => {
+            this.view.costruisceSelettoreLinguaggio(linguaggi );
+        })
+        //fine binding
 
         this.model.caricaDatiDaJson();
     }

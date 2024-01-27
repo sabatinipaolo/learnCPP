@@ -223,6 +223,21 @@
                     ]
                 }
             ]
+        },
+        {
+            "nome": "Java",
+            "directory": "java",
+            "estensione": "java",
+            "argomenti": [
+                {
+                    "directory": "010_Hello_World",
+                    "esercizi": [
+                        "010.Hello_World",
+                        "020.Hello_World"
+                    ]
+                }
+
+            ]
         }
     ]
 }
