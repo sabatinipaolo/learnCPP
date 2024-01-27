@@ -96,7 +96,7 @@ class Model {
         return dmp.diff_main(risposta, this.quizCorrente.soluzione);
     }
 
-    selezionaDirectory(indice) {
+    selezionaArgomento(indice) {
         this.indiceArgomentoCorrente = indice;
         this.elencoNomiQuiz =
             this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
@@ -134,7 +134,7 @@ class View {
         this.differenze = document.getElementById("differenze");
         this.bottoneQuizAvanti = document.getElementById("quizAvanti");
         this.bottoneQuizIndietro = document.getElementById("quizIndietro");
-        this.selettoreCartella = document.getElementById("selettoreCartella");
+        this.selettoreArgomento = document.getElementById("selettoreArgomento");
         this.selettoreLinguaggio = document.getElementById("selettoreLinguaggio");
 
         this.nomeFile = document.getElementById("nomeFile");
@@ -155,11 +155,11 @@ class View {
 
         //this.selettoreLinguaggio[ linguaggi.length ] = new Option("XXXXXXXXXX", linguaggi.length);
     }
-    costruisceSelettoreCartella(elenco) {
-        this.selettoreCartella.innerHTML = "";
+    costruisceSelettoreArgomento(elenco) {
+        this.selettoreArgomento.innerHTML = "";
         elenco.forEach((element, index) => {
             var opt = new Option(element, index);
-            this.selettoreCartella[index] = opt;
+            this.selettoreArgomento[index] = opt;
         });
     }
 
@@ -224,8 +224,8 @@ class View {
             handler();
         });
     }
-    bindSignalOnSelectAltraDirectory(handler) {
-        this.selettoreCartella.addEventListener("change", (event) => {
+    bindSignalOnSelectAltroArgomento(handler) {
+        this.selettoreArgomento.addEventListener("change", (event) => {
             handler();
         });
     }
@@ -263,11 +263,11 @@ class Controller {
         });
 
         this.model.bindSignalGeneratoArgomenti(() => {
-            this.view.costruisceSelettoreCartella(this.model.argomenti);
+            this.view.costruisceSelettoreArgomento(this.model.argomenti);
         });
 
-        this.view.bindSignalOnSelectAltraDirectory(() => {
-            this.model.selezionaDirectory(this.view.selettoreCartella.value);
+        this.view.bindSignalOnSelectAltroArgomento(() => {
+            this.model.selezionaArgomento(this.view.selettoreArgomento.value);
         });
 
         this.view.bindSignalOnSelectAltroLinguaggio(() => {
@@ -276,7 +276,7 @@ class Controller {
 
         this.model.bindSignalGeneratiNuoviDatiDaFileJSON(() => {
             this.view.mostraQuiz(this.model.quizCorrente);
-            this.view.costruisceSelettoreCartella(this.model.argomenti);
+            this.view.costruisceSelettoreArgomento(this.model.argomenti);
         });
 
         this.model.bindSignalGeneratoLinguaggi((linguaggi) => {
