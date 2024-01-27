@@ -120,7 +120,7 @@ class Model {
     }
 
     bindSignalGeneratoLinguaggi(handler) {
-        this.signalGeneratoLinguaggi=handler;
+        this.signalGeneratoLinguaggi = handler;
     }
 }
 
@@ -149,15 +149,12 @@ class View {
         return p.innerHTML;
     }
 
-    costruisceSelettoreLinguaggio(linguaggi){
-
-        for ( let i = 0; i < linguaggi.length ; i++){
+    costruisceSelettoreLinguaggio(linguaggi) {
+        for (let i = 0; i < linguaggi.length; i++) {
             this.selettoreLinguaggio[i] = new Option(linguaggi[i].nome, i);
         }
 
-        
         //this.selettoreLinguaggio[ linguaggi.length ] = new Option("XXXXXXXXXX", linguaggi.length);
-
     }
     costruisceSelettoreCartella(elenco) {
         this.selettoreCartella.innerHTML = "";
@@ -283,9 +280,9 @@ class Controller {
             this.view.costruisceSelettoreCartella(this.model.argomenti);
         });
 
-        this.model.bindSignalGeneratoLinguaggi( ( linguaggi ) => {
-            this.view.costruisceSelettoreLinguaggio(linguaggi );
-        })
+        this.model.bindSignalGeneratoLinguaggi((linguaggi) => {
+            this.view.costruisceSelettoreLinguaggio(linguaggi);
+        });
         //fine binding
 
         this.model.caricaDatiDaJson();
