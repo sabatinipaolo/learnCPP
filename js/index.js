@@ -134,6 +134,7 @@ class View {
         this.differenze = document.getElementById("differenze");
         this.bottoneQuizAvanti = document.getElementById("quizAvanti");
         this.bottoneQuizIndietro = document.getElementById("quizIndietro");
+        this.bottoneCopia = document.getElementById("buttonCopy");
         this.selettoreArgomento = document.getElementById("selettoreArgomento");
         this.selettoreLinguaggio = document.getElementById("selettoreLinguaggio");
 
@@ -224,6 +225,11 @@ class View {
             handler();
         });
     }
+    bindSignalOnClickQuizCopia(handler) {
+        this.bottoneCopia.addEventListener("click", (event) => {
+            handler();
+        });
+    }
     bindSignalOnSelectAltroArgomento(handler) {
         this.selettoreArgomento.addEventListener("change", (event) => {
             handler();
@@ -256,6 +262,10 @@ class Controller {
 
         this.view.bindSignalOnClickQuizIndietro(() => {
             this.model.altroQuiz(-1);
+        });
+
+        this.view.bindSignalOnClickQuizCopia(() => {
+            navigator.clipboard.writeText(this.model.quizCorrente.testo);
         });
 
         this.model.bindSignalQuizChanged(() => {
