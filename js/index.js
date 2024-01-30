@@ -264,8 +264,11 @@ class Controller {
             this.model.altroQuiz(-1);
         });
 
-        this.view.bindSignalOnClickQuizCopia(() => {
-            navigator.clipboard.writeText(this.model.quizCorrente.testo);
+        this.view.bindSignalOnClickQuizCopia(async () => {
+            //TODO: spostare in view ...
+            await navigator.clipboard.writeText(this.model.quizCorrente.testo);
+            this.view.bottoneCopia.innerHTML = " Testo copiato "
+            setTimeout(()=>{ this.view.bottoneCopia.innerHTML = " copia testo nella clipboard  " ;}, 330);
         });
 
         this.model.bindSignalQuizChanged(() => {
