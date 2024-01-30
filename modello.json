@@ -165,7 +165,30 @@
                              "250_scope_global_fun",
                              "260_scope_global_fun"
                        ]
-                },                
+                },  
+                {
+                    "directory" : "110_pointer",
+                    "esercizi" : [ 
+                             "010_hello_pointer",
+                             "020_hello_pointer",
+                             "030_hello_pointer",
+                             "040_hello_pointer",
+                             "050_array_pointer",
+                             "050_hello_pointer",
+                             "060_array_pointer",
+                             "070_array_mat_pointer",
+                             "080_array_mat_pointer",
+                             "090_array_mat_pointer",
+                             "095_array_mat_pointer",
+                             "100_str_len_pointer",
+                             "100_str_mat_pointer",
+                             "105_str_len_pointer",
+                             "150_par_e_point",
+                             "160_par_e_point",
+                             "170_par_arrary_e_point",
+                             "180_par_arrary_e_point"
+                       ]
+                },              
                 {
                     "directory": "210_verifica_di_recupero",
                     "esercizi": [
