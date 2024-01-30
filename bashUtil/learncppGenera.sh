@@ -3,19 +3,38 @@ vecchiaDirectory=$PWD
 directory=$PWD"/"$1
 echo $directory
 
-elenco="elenco.txt"
+dir_esercizi=$(basename $directory)
+
+if [[ "$dir_esercizi" == "." ]]; 
+then exit
+fi
+
+elenco=$vecchiaDirectory"/""elenco.json"
+rm $elenco
+
+
+echo "                    {" >> $elenco
+echo "                        \"directory\" : \""$dir_esercizi"\"," >> $elenco
+echo "                        \"esercizi\" : [ " >> $elenco
+
+
+
 
 
 cd $directory
-rm elenco.txt
-lista=$(ls *.cpp)
+estensione=".c";
+
+lista=$(ls *$estensione)
+
+ultimoFile=$(ls *$estensione | tail -1 )
 
 echo $lista
+echo $ultimoFile 
 
 for sorgente in $lista 
 do
 	echo "sorgente_______________:"$sorgente
-	sorgenteMenoEstensione=${sorgente::-4};
+	sorgenteMenoEstensione=${sorgente::-2};
 	echo "sorgenteMenoEstensione_:"$sorgenteMenoEstensione
 	eseguibile=$sorgenteMenoEstensione".exe"
 	echo "eseguibile_____________:"$eseguibile
@@ -31,12 +50,22 @@ do
 	echo $'\n'"________________________"
 	echo "################################################"
 
-	echo $sorgenteMenoEstensione >> $elenco 
+#   echo $sorgenteMenoEstensione >> $elenco 
+    if [[ "$sorgente" == "$ultimoFile" ]]
+    then 
+        echo "                                 \""$sorgenteMenoEstensione"\"" >> $elenco
+    else
+        echo "                                 \""$sorgenteMenoEstensione"\"," >> $elenco
+    fi
 done
+echo "                           ]">>$elenco
+echo "                    },">>$elenco
+
 rm *.exe
 
 
 cd $vecchiaDirectory
 
+cat $elenco
 
 
