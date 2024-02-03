@@ -75,7 +75,23 @@ function manageResize(md, sizeProp, posProp) {
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
 }
-
+// Define a callback function for the event listener.
+function handleMaxWidth(mql) {
+    // …
+    let flexTop = document.getElementsByClassName("top")[0];
+    let allResizer = flexTop.querySelectorAll(":scope > flex-resizer");
+    //
+    if (mql.matches) {
+        /* the viewport is 600 pixels wide or less */
+        flexTop.className = "top v";
+        allResizer.forEach((item) => (item.style.cursor = "ns-resize"));
+    } else {
+        /* the viewport is more than 600 pixels wide */
+        flexTop.className = "top h";
+        allResizer.forEach((item) => (item.style.cursor = "ew-resize"));
+    }
+    //console.log(flexTop.className);
+}
 function setupResizerEvents() {
     document.body.addEventListener("mousedown", function (md) {
         // Used to avoid cursor's flickering
@@ -105,4 +121,12 @@ function setupResizerEvents() {
             manageResize(md, "offsetHeight", "pageY");
         }
     });
+
+    var mediaQueryList = window.matchMedia("(max-width: 600px)");
+
+    // Run the orientation change handler once.
+    handleMaxWidth(mediaQueryList);
+
+    // Add the callback function as a listener to the query list.
+    mediaQueryList.addEventListener("change", handleMaxWidth);
 }
