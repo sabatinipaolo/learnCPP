@@ -102,7 +102,6 @@
                         "200.for_loop"
                     ]
                 },
-                
                 {
                     "directory": "070_array",
                     "esercizi": [
@@ -110,7 +109,7 @@
                         "003.pre_array",
                         "005.pre_array",
                         "006.pre_array",
-                        "007.pre_array",                                                
+                        "007.pre_array",
                         "010.array_int",
                         "020.array_int",
                         "030.array_int",
@@ -149,70 +148,65 @@
                     ]
                 },
                 {
-                    "directory" : "100_scope",
-                    "esercizi" : [ 
-                             "010_scope",
-                             "020_scope",
-                             "030_scope",
-                             "040_scope",
-                             "050_scope",
-                             "060_scope",
-                             "070_scope",
-                             "100_scope",
-                             "110_scope",
-                             "120_scope",
-                             "200_scope_fun",
-                             "250_scope_global_fun",
-                             "260_scope_global_fun"
-                       ]
-                },  
-                {
-                    "directory" : "110_pointer",
-                    "esercizi" : [ 
-                             "010_hello_pointer",
-                             "020_hello_pointer",
-                             "030_hello_pointer",
-                             "040_hello_pointer",
-                             "050_hello_pointer",
-                             "060_array_pointer",
-                             "070_array_mat_pointer",
-                             "080_array_mat_pointer",
-                             "090_array_mat_pointer",
-                             "095_array_mat_pointer",
-                             "100_str_len_pointer",
-                             "100_str_mat_pointer",
-                             "105_str_len_pointer",
-                             "150_par_e_point",
-                             "160_par_e_point",
-                             "170_par_arrary_e_point",
-                             "180_par_arrary_e_point"
-                       ]
-                }, 
-                {
-                    "directory" : "120_function_ref",
-                    "esercizi" : [ 
-                             "010_func_ref",
-                             "013_func_ref",
-                             "020_func_ref",
-                             "030_func_ref",
-                             "040_func_ref",
-                             "045_func_ref_array",
-                             "050_func_ref_array",
-                             "060_func_ref_array",
-                             "070_func_ref_array",
-                             "080_func_ref_array",
-                             "090_func_ref_array",
-                             "100_func_ref_array"
-                       ]
+                    "directory": "100_scope",
+                    "esercizi": [
+                        "010_scope",
+                        "020_scope",
+                        "030_scope",
+                        "040_scope",
+                        "050_scope",
+                        "060_scope",
+                        "070_scope",
+                        "100_scope",
+                        "110_scope",
+                        "120_scope",
+                        "200_scope_fun",
+                        "250_scope_global_fun",
+                        "260_scope_global_fun"
+                    ]
                 },
-         
+                {
+                    "directory": "110_pointer",
+                    "esercizi": [
+                        "010_hello_pointer",
+                        "020_hello_pointer",
+                        "030_hello_pointer",
+                        "040_hello_pointer",
+                        "050_hello_pointer",
+                        "060_array_pointer",
+                        "070_array_mat_pointer",
+                        "080_array_mat_pointer",
+                        "090_array_mat_pointer",
+                        "095_array_mat_pointer",
+                        "100_str_len_pointer",
+                        "100_str_mat_pointer",
+                        "105_str_len_pointer",
+                        "150_par_e_point",
+                        "160_par_e_point",
+                        "170_par_arrary_e_point",
+                        "180_par_arrary_e_point"
+                    ]
+                },
+                {
+                    "directory": "120_function_ref",
+                    "esercizi": [
+                        "010_func_ref",
+                        "013_func_ref",
+                        "020_func_ref",
+                        "030_func_ref",
+                        "040_func_ref",
+                        "045_func_ref_array",
+                        "050_func_ref_array",
+                        "060_func_ref_array",
+                        "070_func_ref_array",
+                        "080_func_ref_array",
+                        "090_func_ref_array",
+                        "100_func_ref_array"
+                    ]
+                },
                 {
                     "directory": "210_verifica_di_recupero",
-                    "esercizi": [
-                        "01.esercizio",
-                        "02.esercizio",
-                        "03.esercizio"
-                    ]
+                    "esercizi": ["01.esercizio", "02.esercizio", "03.esercizio"]
                 }
             ]
         },
@@ -294,12 +288,8 @@
             "argomenti": [
                 {
                     "directory": "010_Hello_World",
-                    "esercizi": [
-                        "010.Hello_World",
-                        "020.Hello_World"
-                    ]
+                    "esercizi": ["010.Hello_World", "020.Hello_World"]
                 }
-
             ]
         }
     ]
