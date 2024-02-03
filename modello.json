@@ -188,7 +188,25 @@
                              "170_par_arrary_e_point",
                              "180_par_arrary_e_point"
                        ]
-                },              
+                }, 
+                {
+                    "directory" : "120_function_ref",
+                    "esercizi" : [ 
+                             "010_func_ref",
+                             "013_func_ref",
+                             "020_func_ref",
+                             "030_func_ref",
+                             "040_func_ref",
+                             "045_func_ref_array",
+                             "050_func_ref_array",
+                             "060_func_ref_array",
+                             "070_func_ref_array",
+                             "080_func_ref_array",
+                             "090_func_ref_array",
+                             "100_func_ref_array"
+                       ]
+                },
+         
                 {
                     "directory": "210_verifica_di_recupero",
                     "esercizi": [
