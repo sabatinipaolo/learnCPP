@@ -1,6 +1,18 @@
-class Model {
+class Model extends EventTarget{
     constructor() {
-        //vuoto perché l'inizializzazione dei dati è demandata al controller
+        super();
+    }
+
+    lanciaEvent(eventName, dettagli = {}) {
+        const event = new CustomEvent(eventName, {
+            detail: dettagli
+        });
+        this.dispatchEvent(event);
+    }
+
+    // questa funzione on( ... ) è per leggibilità nel controllore  
+    on(eventName, handler) {
+        this.addEventListener(eventName, handler);
     }
 
     caricaDatiDaJson() {
@@ -14,13 +26,13 @@ class Model {
             .then((json) => {
                 this.dati = json;
                 this.inizializzaDaDati();
-                this.signalGeneratiNuoviDatiDaFileJSON();
+                this.lanciaEvent( "modelHaGeneratoNuoviDatiDafileJSON");  //TODO: serve ???
             });
     }
 
     inizializzaDaDati() {
         this.quizCorrente = { testo: "", soluzione: "", indice: 0 };
-        this.signalGeneratoLinguaggi(this.dati.linguaggi);
+        this.lanciaEvent("modelHaGeneratoLinguaggi",{linguaggi:this.dati.linguaggi});
         this.indiceLinguaggioCorrente = 0; //il default
         this.caricaLinguaggioDiIndice(this.indiceLinguaggioCorrente);
     }
@@ -34,7 +46,7 @@ class Model {
         }
         this.indiceArgomentoCorrente = 0;
 
-        this.signalGeneratoArgomenti();
+        this.lanciaEvent("modelHaGeneratoArgomenti");
 
         this.elencoNomiQuiz =
             this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
@@ -78,7 +90,7 @@ class Model {
             .then((res) => res.text())
             .then((text) => {
                 this.quizCorrente.testo = text;
-                this.signalQuizChanged();
+                this.lanciaEvent("modelHaCambiatoQuiz");
             })
             .catch((e) => console.error(e));
 
@@ -86,7 +98,7 @@ class Model {
             .then((res) => res.text())
             .then((text) => {
                 this.quizCorrente.soluzione = text;
-                this.signalQuizChanged();
+                this.lanciaEvent("modelHaCambiatoQuiz");
             })
             .catch((e) => console.error(e));
     }
@@ -103,22 +115,5 @@ class Model {
                 this.indiceArgomentoCorrente
             ].esercizi;
         this.caricaInQuizCorrenteQuelloDiIndice(0);
-    }
-
-    //bind per l'inversione di controllo
-    bindSignalQuizChanged(handler) {
-        this.signalQuizChanged = handler;
-    }
-
-    bindSignalGeneratoArgomenti(handler) {
-        this.signalGeneratoArgomenti = handler;
-    }
-
-    bindSignalGeneratiNuoviDatiDaFileJSON(handler) {
-        this.signalGeneratiNuoviDatiDaFileJSON = handler;
-    }
-
-    bindSignalGeneratoLinguaggi(handler) {
-        this.signalGeneratoLinguaggi = handler;
     }
 }

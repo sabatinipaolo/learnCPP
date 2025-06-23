@@ -1,19 +1,59 @@
-class View {
+class View extends EventTarget {
     constructor() {
+        super();
+        this.eventTarget = new EventTarget();  
         this.codeBlock = document.getElementById("codeBlock");
         this.risposta = document.getElementById("risposta");
         this.risposta.placeholder =
             "Inserisci qui quello che pensi il programma produca in output poi clicca su controlla";
         this.bottoneControlla = document.getElementById("bottoneControlla");
+        this.bottoneControlla.addEventListener("click", (e)=> {
+            this.lanciaEvent("viewHaCliccatoSuControlla");
+        });
+
+
         this.soluzione = document.getElementById("soluzione");
         this.differenze = document.getElementById("differenze");
         this.bottoneQuizAvanti = document.getElementById("quizAvanti");
+        this.bottoneQuizAvanti.addEventListener("click", (e)=> {
+            this.lanciaEvent("viewHacliccatoQuizAvanti");
+        });
+
         this.bottoneQuizIndietro = document.getElementById("quizIndietro");
+        this.bottoneQuizIndietro.addEventListener("click", (e)=> {
+            this.lanciaEvent("viewHaCliccatoQuizIndietro");
+        });
+        
         this.bottoneCopia = document.getElementById("buttonCopy");
+        this.bottoneCopia.addEventListener("click",  async () => {
+                await navigator.clipboard.writeText(this.testoQuizNonHighlighted);
+                this.bottoneCopia.innerHTML = " Testo copiato "
+                setTimeout(() => { this.bottoneCopia.innerHTML = " copia testo nella clipboard  "; }, 330);
+        });
+
         this.selettoreArgomento = document.getElementById("selettoreArgomento");
+        this.selettoreArgomento.addEventListener("change", (e)=> {
+            this.lanciaEvent("viewHaCliccatoAltroArgomento",{value:this.selettoreArgomento.value})
+        })
+
         this.selettoreLinguaggio = document.getElementById("selettoreLinguaggio");
+        this.selettoreLinguaggio.addEventListener("change", (e) => {
+            this.lanciaEvent("viewHaCliccatoAltroLinguaggio",{value:this.selettoreLinguaggio.value}) 
+        })
 
         this.nomeFile = document.getElementById("nomeFile");
+    }
+
+    lanciaEvent(eventName, dettagli = {}) {
+        const event = new CustomEvent(eventName, {
+            detail: dettagli
+        });
+        this.dispatchEvent(event);
+    }
+
+    // questa funzione on( ... ) è per leggibilità nel controllore  
+    on(eventName, handler) {
+        this.addEventListener(eventName, handler);
     }
 
     escapeHTML(stringa) {
@@ -72,6 +112,7 @@ class View {
     mostraQuiz(quiz) {
         this.cancellaQuiz();
         this.nomeFile.innerHTML = quiz.nome;
+        this.testoQuizNonHighlighted=quiz.testo; 
         this.codeBlock.innerHTML = this.escapeHTML(quiz.testo);
         delete codeBlock.dataset.highlighted;
         hljs.highlightElement(this.codeBlock);
@@ -83,36 +124,4 @@ class View {
         this.differenze.innerHTML = "";
     }
 
-    //bind per l'inversione di controllo
-    bindSignalOnClickControlla(handler) {
-        this.bottoneControlla.addEventListener("click", (event) => {
-            handler();
-        });
-    }
-
-    bindSignalOnClickQuizAvanti(handler) {
-        this.bottoneQuizAvanti.addEventListener("click", (event) => {
-            handler();
-        });
-    }
-    bindSignalOnClickQuizIndietro(handler) {
-        this.bottoneQuizIndietro.addEventListener("click", (event) => {
-            handler();
-        });
-    }
-    bindSignalOnClickQuizCopia(handler) {
-        this.bottoneCopia.addEventListener("click", (event) => {
-            handler();
-        });
-    }
-    bindSignalOnSelectAltroArgomento(handler) {
-        this.selettoreArgomento.addEventListener("change", (event) => {
-            handler();
-        });
-    }
-    bindSignalOnSelectAltroLinguaggio(handler) {
-        this.selettoreLinguaggio.addEventListener("change", (event) => {
-            handler();
-        });
-    }
 }
