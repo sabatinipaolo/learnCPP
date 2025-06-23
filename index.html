@@ -15,11 +15,20 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
         <script src="./diff_match_patch/diff_match_patch_uncompressed.js"></script>
         <link rel="stylesheet" href="./style/style.css" />
-        <script src="./js/index.js"></script>
+        <script src="./js/model.js"></script>
+        <script src="./js/view.js"></script>
+        <script src="./js/controller.js"></script>
         <script src="./js/indexMR.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                new Controller(new Model(), new View());
+                setupResizerEvents();
+            })
+        </script>
+        
     </head>
 
-    <body onload="setup()">
+    <body>
             <header style="padding: 5px; display: flex; justify-content: space-between">
                 <div style="flex-grow: 1">
                     Learn to read :
