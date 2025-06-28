@@ -1,104 +1,117 @@
 <!DOCTYPE html>
 <html lang="it">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>LearnC++</title>
-        <link rel="icon" href="./favicon.ico" type="image/x-icon" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-            crossorigin="anonymous"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
-        />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-        <script src="./diff_match_patch/diff_match_patch_uncompressed.js"></script>
-        <link rel="stylesheet" href="./style/style.css" />
-        <script src="./js/model.js"></script>
-        <script src="./js/view.js"></script>
-        <script src="./js/controller.js"></script>
-        <script src="./js/indexMR.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                new Controller(new Model(), new View());
-                setupResizerEvents();
-            });
-        </script>
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>LearnC++</title>
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
 
-    <body>
-        <header
-            style="padding: 5px; display: flex; justify-content: space-between"
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="./diff_match_patch/diff_match_patch_uncompressed.js"></script>
+    <link rel="stylesheet" href="./style/style.css" />
+    <script src="./js/model.js"></script>
+    <script src="./js/view.js"></script>
+    <script src="./js/controller.js"></script>
+    <script src="./js/indexMR.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        new Controller(new Model(), new View());
+        setupResizerEvents();
+      });
+    </script>
+  </head>
+
+  <body>
+    <header style="padding: 5px; display: flex; justify-content: space-between">
+      <!-- -->
+
+      <div style="flex-grow: 1">
+        Learn to read :
+        <select id="selettoreLinguaggio"></select>
+      </div>
+
+      <div>
+        argomento :<select
+          id="selettoreArgomento"
+          style="flex-grow: 1.5"
+        ></select>
+      </div>
+    </header>
+
+    <main>
+      <flex class="top h" style="height: 90vh; border: 1px solid">
+        <!-- -->
+
+        <flex-item style="flex: 1">
+          <nav>
+            <button id="quizIndietro">&lt&lt quiz</button>
+
+            <div
+              id="nomeFile"
+              style="text-align: center; vertical-align: middle"
+            ></div>
+
+            <button id="quizAvanti">quiz >></button>
+          </nav>
+
+          <pre><code id="codeBlock" class="language-cpp"></code></pre>
+
+          <div>
+            <button id="buttonCopy">copia testo nella clipboard</button>
+          </div>
+        </flex-item>
+
+        <flex-resizer></flex-resizer>
+
+        <flex class="v">
+          <div>output:</div>
+
+          <flex-item style="flex: 1">
+            <textarea
+              id="risposta"
+              class="terminal"
+              spellcheck="false"
+            ></textarea>
+          </flex-item>
+
+          <button id="bottoneControlla">controlla</button>
+
+          <flex-resizer></flex-resizer>
+
+          <div>Soluzione:</div>
+
+          <flex-item style="flex: 1">
+            <textarea id="soluzione" class="terminal" readonly></textarea>
+          </flex-item>
+
+          <flex-resizer></flex-resizer>
+
+          <div>differenze:</div>
+
+          <flex-item style="flex: 1">
+            <div id="differenze" class="terminal"></div>
+          </flex-item>
+        </flex>
+      </flex>
+
+      <footer>
+        sviluppato in modo caotico e disorganizzato da Paolo Sabatini -
+        <a href="https://github.com/sabatinipaolo/learnCPP">
+          fork me on github</a
         >
-            <div style="flex-grow: 1">
-                Learn to read :
-                <select id="selettoreLinguaggio"></select>
-            </div>
-            <div>
-                argomento :<select
-                    id="selettoreArgomento"
-                    style="flex-grow: 1.5"
-                ></select>
-            </div>
-        </header>
-        <main>
-            <flex class="top h" style="height: 90vh; border: 1px solid">
-                <flex-item style="flex: 1">
-                    <nav>
-                        <button id="quizIndietro">&lt&lt quiz</button>
-                        <div
-                            id="nomeFile"
-                            style="text-align: center; vertical-align: middle"
-                        ></div>
-                        <button id="quizAvanti">quiz >></button>
-                    </nav>
-
-                    <pre><code id="codeBlock" class="language-cpp"></code></pre>
-                    <div>
-                        <button id="buttonCopy">
-                            copia testo nella clipboard
-                        </button>
-                    </div>
-                </flex-item>
-
-                <flex-resizer></flex-resizer>
-                <flex class="v">
-                    <div>output:</div>
-                    <flex-item style="flex: 1">
-                        <textarea
-                            id="risposta"
-                            class="terminal"
-                            spellcheck="false"
-                        ></textarea>
-                    </flex-item>
-                    <button id="bottoneControlla">controlla</button>
-                    <flex-resizer></flex-resizer>
-                    <div>Soluzione:</div>
-                    <flex-item style="flex: 1">
-                        <textarea
-                            id="soluzione"
-                            class="terminal"
-                            readonly
-                        ></textarea>
-                    </flex-item>
-                    <flex-resizer></flex-resizer>
-                    <div>differenze:</div>
-                    <flex-item style="flex: 1">
-                        <div id="differenze" class="terminal"></div>
-                    </flex-item>
-                </flex>
-            </flex>
-            <footer>
-                sviluppato in modo caotico e disorganizzato da Paolo Sabatini -
-                <a href="https://github.com/sabatinipaolo/learnCPP">
-                    fork me on github</a
-                >
-            </footer>
-        </main>
-    </body>
+      </footer>
+    </main>
+  </body>
 </html>
