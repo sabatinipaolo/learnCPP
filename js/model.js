@@ -84,23 +84,16 @@ class Model extends EventTarget{
 
         let estensioneSorgente = this.dati.linguaggi[this.indiceLinguaggioCorrente].estensione;
 
-        //TODO : trasformare in promiseALL (attualmente segnala che il quiz è cambiato
-        // 2 volte, prevedere possibili tempi di download lunghi ...)
-        fetch(percorsoENomeQuiz + "." + estensioneSorgente)
-            .then((res) => res.text())
-            .then((text) => {
-                this.quizCorrente.testo = text;
-                this.lanciaEvent("modelHaCambiatoQuiz");
-            })
-            .catch((e) => console.error(e));
-
-        fetch(percorsoENomeQuiz + ".sol")
-            .then((res) => res.text())
-            .then((text) => {
-                this.quizCorrente.soluzione = text;
-                this.lanciaEvent("modelHaCambiatoQuiz");
-            })
-            .catch((e) => console.error(e));
+        Promise.all([
+            fetch(percorsoENomeQuiz + "." + estensioneSorgente).then((res) => res.text()),
+            fetch(percorsoENomeQuiz + ".sol").then((res) => res.text())
+        ])
+        .then(([testo, soluzione]) => {
+            this.quizCorrente.testo = testo;
+            this.quizCorrente.soluzione = soluzione;
+            this.lanciaEvent("modelHaCambiatoQuiz");
+        })
+        .catch((e) => console.error(e));
     }
 
     controlla(risposta) {
