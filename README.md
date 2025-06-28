@@ -6,7 +6,8 @@ deve inserire l'output del programa mostrato stando attento a rispettare le maiu
 cliccando su controlla viene mostrata la soluzione e le diff con quanto inserito.
 
 
-sviluppato per capire quanto scritto qui : [https://www.taniarascia.com/javascript-mvc-todo-app/](https://www.taniarascia.com/javascript-mvc-todo-app/)
+~~sviluppato per capire quanto scritto qui : [https://www.taniarascia.com/javascript-mvc-todo-app/](https://www.taniarascia.com/javascript-mvc-todo-app/)~~
+ora sviluppato con custom event, forse più semplice da far capire ai ragazzi.
 
 usa :
 - diff-match-patch : per il diff 
