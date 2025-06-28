@@ -1,112 +1,118 @@
-class Model extends EventTarget{
-    constructor() {
-        super();
-    }
+class Model extends EventTarget {
+  constructor() {
+    super();
+  }
 
-    lanciaEvent(eventName, dettagli = {}) {
-        const event = new CustomEvent(eventName, {
-            detail: dettagli
-        });
-        this.dispatchEvent(event);
-    }
+  lanciaEvent(eventName, dettagli = {}) {
+    const event = new CustomEvent(eventName, {
+      detail: dettagli,
+    });
+    this.dispatchEvent(event);
+  }
 
-    // questa funzione on( ... ) è per leggibilità nel controllore  
-    on(eventName, handler) {
-        this.addEventListener(eventName, handler);
-    }
+  // questa funzione on( ... ) è per leggibilità nel controllore
+  on(eventName, handler) {
+    this.addEventListener(eventName, handler);
+  }
 
-    caricaDatiDaJson() {
-        fetch("modello.json")
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("HTTP error " + response.status);
-                }
-                return response.json();
-            })
-            .then((json) => {
-                this.dati = json;
-                this.inizializzaDaDati();
-                this.lanciaEvent( "modelHaGeneratoNuoviDatiDafileJSON");  //TODO: serve ???
-            });
-    }
-
-    inizializzaDaDati() {
-        this.quizCorrente = { testo: "", soluzione: "", indice: 0 };
-        this.lanciaEvent("modelHaGeneratoLinguaggi",{linguaggi:this.dati.linguaggi});
-        this.indiceLinguaggioCorrente = 0; //il default
-        this.caricaLinguaggioDiIndice(this.indiceLinguaggioCorrente);
-    }
-
-    caricaLinguaggioDiIndice(indice) {
-        this.indiceLinguaggioCorrente = indice;
-
-        this.argomenti = [];
-        for (const argo of this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti) {
-            this.argomenti.push(argo.directory);
+  caricaDatiDaJson() {
+    fetch("modello.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("HTTP error " + response.status);
         }
-        this.indiceArgomentoCorrente = 0;
+        return response.json();
+      })
+      .then((json) => {
+        this.dati = json;
+        this.inizializzaDaDati();
+        this.lanciaEvent("modelHaGeneratoNuoviDatiDafileJSON"); //TODO: serve ???
+      });
+  }
 
-        this.lanciaEvent("modelHaGeneratoArgomenti");
+  inizializzaDaDati() {
+    this.quizCorrente = { testo: "", soluzione: "", indice: 0 };
+    this.lanciaEvent("modelHaGeneratoLinguaggi", {
+      linguaggi: this.dati.linguaggi,
+    });
+    this.indiceLinguaggioCorrente = 0; //il default
+    this.caricaLinguaggioDiIndice(this.indiceLinguaggioCorrente);
+  }
 
-        this.elencoNomiQuiz =
-            this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
-                this.indiceArgomentoCorrente
-            ].esercizi;
-        this.caricaInQuizCorrenteQuelloDiIndice(0);
+  caricaLinguaggioDiIndice(indice) {
+    this.indiceLinguaggioCorrente = indice;
+
+    this.argomenti = [];
+    for (const argo of this.dati.linguaggi[this.indiceLinguaggioCorrente]
+      .argomenti) {
+      this.argomenti.push(argo.directory);
     }
+    this.indiceArgomentoCorrente = 0;
 
-    altroQuiz(piuOMenoUno) {
-        let i = this.quizCorrente.indice;
-        let n = this.elencoNomiQuiz.length;
+    this.lanciaEvent("modelHaGeneratoArgomenti");
 
-        i = (((i + piuOMenoUno) % n) + n) % n; // i in [ 0 .. n-1 ], mai negativo
+    this.elencoNomiQuiz =
+      this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
+        this.indiceArgomentoCorrente
+      ].esercizi;
+    this.caricaInQuizCorrenteQuelloDiIndice(0);
+  }
 
-        this.caricaInQuizCorrenteQuelloDiIndice(i);
-    }
+  altroQuiz(piuOMenoUno) {
+    let i = this.quizCorrente.indice;
+    let n = this.elencoNomiQuiz.length;
 
-    caricaInQuizCorrenteQuelloDiIndice(indice) {
-        this.quizCorrente.indice = indice;
+    i = (((i + piuOMenoUno) % n) + n) % n; // i in [ 0 .. n-1 ], mai negativo
 
-        let nomeQuiz = this.elencoNomiQuiz[indice];
+    this.caricaInQuizCorrenteQuelloDiIndice(i);
+  }
 
-        this.quizCorrente.nome = nomeQuiz;
+  caricaInQuizCorrenteQuelloDiIndice(indice) {
+    this.quizCorrente.indice = indice;
 
-        let percorsoENomeQuiz =
-            this.dati.directory +
-            "/" +
-            this.dati.linguaggi[this.indiceLinguaggioCorrente].directory +
-            "/" +
-            this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
-                this.indiceArgomentoCorrente
-            ].directory +
-            "/" +
-            nomeQuiz;
+    let nomeQuiz = this.elencoNomiQuiz[indice];
 
-        let estensioneSorgente = this.dati.linguaggi[this.indiceLinguaggioCorrente].estensione;
+    this.quizCorrente.nome = nomeQuiz;
 
-        Promise.all([
-            fetch(percorsoENomeQuiz + "." + estensioneSorgente).then((res) => res.text()),
-            fetch(percorsoENomeQuiz + ".sol").then((res) => res.text())
-        ])
-        .then(([testo, soluzione]) => {
-            this.quizCorrente.testo = testo;
-            this.quizCorrente.soluzione = soluzione;
-            this.lanciaEvent("modelHaCambiatoQuiz");
-        })
-        .catch((e) => console.error(e));
-    }
+    let percorsoENomeQuiz =
+      this.dati.directory +
+      "/" +
+      this.dati.linguaggi[this.indiceLinguaggioCorrente].directory +
+      "/" +
+      this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
+        this.indiceArgomentoCorrente
+      ].directory +
+      "/" +
+      nomeQuiz;
 
-    controlla(risposta) {
-        var dmp = new diff_match_patch(); //TODO : rendere globale dmp?
-        return dmp.diff_main(risposta, this.quizCorrente.soluzione);
-    }
+    let estensioneSorgente =
+      this.dati.linguaggi[this.indiceLinguaggioCorrente].estensione;
 
-    selezionaArgomento(indice) {
-        this.indiceArgomentoCorrente = indice;
-        this.elencoNomiQuiz =
-            this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
-                this.indiceArgomentoCorrente
-            ].esercizi;
-        this.caricaInQuizCorrenteQuelloDiIndice(0);
-    }
+    Promise.all([
+      fetch(percorsoENomeQuiz + "." + estensioneSorgente).then((res) =>
+        res.text()
+      ),
+      fetch(percorsoENomeQuiz + ".sol").then((res) => res.text()),
+    ])
+      .then(([testo, soluzione]) => {
+        this.quizCorrente.testo = testo;
+        this.quizCorrente.soluzione = soluzione;
+        this.lanciaEvent("modelHaCambiatoQuiz");
+      })
+      .catch((e) => console.error(e));
+  }
+
+  controlla(risposta) {
+    var dmp = new diff_match_patch(); //TODO : rendere globale dmp?
+    return dmp.diff_main(risposta, this.quizCorrente.soluzione);
+  }
+
+  selezionaArgomento(indice) {
+    this.indiceArgomentoCorrente = indice;
+    this.elencoNomiQuiz =
+      this.dati.linguaggi[this.indiceLinguaggioCorrente].argomenti[
+        this.indiceArgomentoCorrente
+      ].esercizi;
+    this.caricaInQuizCorrenteQuelloDiIndice(0);
+  }
 }
