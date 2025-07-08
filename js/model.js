@@ -1,19 +1,9 @@
-class Model extends EventTarget {
-  
+import { EventEmitter } from "./EventEmitter.js";
+
+export class Model extends EventEmitter {
   constructor() {
     super();
-    this.dmp = new diff_match_patch();  
-  }
-
-  lanciaEvent(eventName, dettagli = {}) {
-    this.dispatchEvent(new CustomEvent(eventName, {
-      detail: dettagli,
-    }));
-  }
-
-  // questa funzione on( ... ) è per leggibilità nel controllore
-  on(eventName, handler) {
-    this.addEventListener(eventName, handler);
+    this.dmp = new diff_match_patch();
   }
 
   caricaDatiDaJson() {

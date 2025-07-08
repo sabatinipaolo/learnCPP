@@ -1,4 +1,6 @@
-class View extends EventTarget {
+import { EventEmitter } from "./EventEmitter.js";
+
+export class View extends EventEmitter {
   constructor() {
     super();
     this.codeBlock = document.getElementById("codeBlock");
@@ -46,17 +48,6 @@ class View extends EventTarget {
     });
 
     this.nomeFile = document.getElementById("nomeFile");
-  }
-
-  lanciaEvent(eventName, dettagli = {}) {
-    this.dispatchEvent(new CustomEvent(eventName, {
-      detail: dettagli,
-    }));
-  }
-
-  // questa funzione on( ... ) è per leggibilità nel controllore
-  on(eventName, handler) {
-    this.addEventListener(eventName, handler);
   }
 
   escapeHTML(stringa) {
