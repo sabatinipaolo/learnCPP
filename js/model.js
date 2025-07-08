@@ -1,6 +1,8 @@
 class Model extends EventTarget {
+  
   constructor() {
     super();
+    this.dmp = new diff_match_patch();  
   }
 
   lanciaEvent(eventName, dettagli = {}) {
@@ -103,8 +105,7 @@ class Model extends EventTarget {
   }
 
   controlla(risposta) {
-    var dmp = new diff_match_patch(); //TODO : rendere globale dmp?
-    return dmp.diff_main(risposta, this.quizCorrente.soluzione);
+    return this.dmp.diff_main(risposta, this.quizCorrente.soluzione);
   }
 
   selezionaArgomento(indice) {
