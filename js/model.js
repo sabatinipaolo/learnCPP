@@ -6,10 +6,9 @@ class Model extends EventTarget {
   }
 
   lanciaEvent(eventName, dettagli = {}) {
-    const event = new CustomEvent(eventName, {
+    this.dispatchEvent(new CustomEvent(eventName, {
       detail: dettagli,
-    });
-    this.dispatchEvent(event);
+    }));
   }
 
   // questa funzione on( ... ) è per leggibilità nel controllore
