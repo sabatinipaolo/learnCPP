@@ -1,7 +1,6 @@
 class View extends EventTarget {
   constructor() {
     super();
-    this.eventTarget = new EventTarget();
     this.codeBlock = document.getElementById("codeBlock");
     this.risposta = document.getElementById("risposta");
     this.risposta.placeholder =
