@@ -21,3 +21,5 @@ TODO: sviluppare meglio il resizing delle box (ad esempio su mobile non funziona
 https://medium.com/the-z/making-a-resizable-div-in-js-is-not-easy-as-you-think-bda19a1bc53d
 
 per altro vedere le issue.
+
+perché?
