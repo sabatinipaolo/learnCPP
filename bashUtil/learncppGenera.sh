@@ -1,9 +1,17 @@
 #!/bin/bash
+# richiama da dentro la directory degli esercizi
+# richiama con ../../../bashUtil/learncppGenera.sh
+# genera elecno.json nella directory di lavoro 
+#copia e incolla il contenuto di elenco.json in modello.json
+#TODO: SISTEMARE E AGGIUNGERE CONTROLLI!!
+
 vecchiaDirectory=$PWD
 directory=$PWD"/"$1
-echo $directory
-
+echo "directory" $directory
 dir_esercizi=$(basename $directory)
+echo "dir_esercizi:"$dir_esercizi
+
+
 
 if [[ "$dir_esercizi" == "." ]]; 
 then exit
@@ -11,6 +19,8 @@ fi
 
 elenco=$vecchiaDirectory"/""elenco.json"
 rm $elenco
+echo "elenco : "$elenco
+
 
 
 echo "                    {" >> $elenco
